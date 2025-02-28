@@ -7,5 +7,4 @@ from django.contrib.auth import login,logout
 
 # Home page
 def home(request):
-    return HttpResponse('welcome')
-    # return render(request,'home.html')
+    return render(request,'home.html')
