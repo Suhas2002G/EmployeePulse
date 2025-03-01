@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'main' %}
+<div class="dept-container">
+    <div class="dept-header">
+        <h2>Department Dashboard</h2>
+        <button class="dept-add-btn" onclick="showForm()">Add New Department</button>
+    </div>
+
+    {% if successmsg %}
+        <div id="success" class="alert alert-success" role="alert">
+            {{ successmsg }}
+        </div>
+    {% elif errormsg %}
+        <div id="error" class="alert alert-danger" role="alert" data-redirect-url="/">
+            {{ errormsg }}
+        </div>
+    {% endif %}
+
+    <table class="dept-table">
+        <thead>
+            <tr>
+                <th>Sr No</th>
+                <th>Department Name</th>
+                <th>Description</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.dept_name }}</td>
+                <td style="text-align: left;">{{ i.desc }}</td>
+                <td>
+                    <a href="#" onclick="showEditForm('{{ i.dept_name }}', '{{ i.desc }}', '{{ i.dept_id }}')" 
+                        class="dept-edit-btn" style="text-decoration: none; color: black;">
+                        Edit
+                    </a>
+                </td>
+                <td>
+                    <a href="/del_dept/{{ i.dept_id }}" class="dept-delete-btn" style="text-decoration: none; color: black;">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Add Department Form (Popup Modal) -->
+<div class="dept-form-popup" id="deptForm">
+    <div class="dept-form-container">
+        <h3>Add New Department</h3>
+        <form method="POST" action="/add_dept">
+            {% csrf_token %}
+            <label class="dept-form-label">Department Name:</label>
+            <input type="text" name="dept_name" class="dept-form-input" required>
+
+            <label class="dept-form-label">Description:</label>
+            <textarea name="dept_desc" class="dept-form-textarea" required></textarea>
+
+            <div class="dept-form-btn-group">
+                <button type="submit" class="dept-form-submit">Submit</button>
+                <button type="button" class="dept-form-cancel" onclick="hideForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Department Form (Popup Modal) -->
+<div class="dept-form-popup" id="deptEditForm">
+    <div class="dept-form-container">
+        <h3>Edit Department</h3>
+        <form method="POST" id="editDeptForm">
+            {% csrf_token %}
+            <label class="dept-form-label">Department Name:</label>
+            <input type="text" name="dept_name" class="dept-form-input" id="editDeptName" required>
+
+            <label class="dept-form-label">Description:</label>
+            <textarea name="dept_desc" class="dept-form-textarea" id="editDeptDesc" required></textarea>
+
+            <div class="dept-form-btn-group">
+                <button type="submit" class="dept-form-submit">Submit</button>
+                <button type="button" class="dept-form-cancel" onclick="hideForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock 'main' %}
