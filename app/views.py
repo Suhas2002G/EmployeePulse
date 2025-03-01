@@ -14,6 +14,8 @@ def home(request):
 def dashboard(request):
     return render(request, 'dashboard.html')
 
+
+# Display all Departments
 def department(request):
     context={}
     d = Dept.objects.all().order_by('dept_id')
@@ -21,7 +23,7 @@ def department(request):
     return render(request, 'department.html',context)
 
 
-
+# Add new Department
 def add_dept(request):
     if request.method == 'POST':
         context = {} 
@@ -39,25 +41,26 @@ def add_dept(request):
     return render(request, 'department.html', context)  # Handle non-POST requests
 
 
-
+# Delete Department
 def del_dept(request, did):
     dept = Dept.objects.get(dept_id = did) 
     dept.delete()
-
     return redirect('/department')
 
 
+# Edit Department
 def edit(request, did):
-    department = Dept.objects.get(dept_id=did)
+    d = Dept.objects.get(dept_id=did)
 
     if request.method == "POST":
         dept_name = request.POST.get("dept_name")
         dept_desc = request.POST.get("dept_desc")
 
-        department.dept_name = dept_name
-        department.desc = dept_desc
-        department.save()
+        d.dept_name = dept_name
+        d.desc = dept_desc
+        d.save()
 
         return redirect("/department")  
+    
 
-    # return render(request, "edit_department.html", {"department": department})
+
