@@ -17,9 +17,7 @@ class Dept(models.Model):
 
 # Role Model : 
 class Role(models.Model):
-    uid = models.ForeignKey(User, db_column='uid', on_delete=models.CASCADE)
-    ROLE=(('Admin','Admin'),('Manager','Manager'),('Team Lead','Team Lead'),('Employee','Employee'))
-    role = models.CharField(max_length=100, choices=ROLE)
+    role = models.CharField(max_length=100)
     desc = models.CharField(max_length=300)
     created_at = models.DateTimeField(auto_now_add=True)  
     updated_at = models.DateTimeField(auto_now=True)

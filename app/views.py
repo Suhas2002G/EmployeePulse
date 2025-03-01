@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User        
 from django.contrib.auth import authenticate       
 from django.contrib.auth import login,logout
-from .models import Dept
+from .models import Dept, Role
 
 
 
@@ -10,9 +10,6 @@ from .models import Dept
 def home(request):
     return render(request,'home.html')
 
-
-def dashboard(request):
-    return render(request, 'dashboard.html')
 
 
 # Display all Departments
@@ -64,3 +61,54 @@ def edit(request, did):
     
 
 
+# Display all Roles
+def role(request):
+    context={}
+    r = Role.objects.all().order_by('id')
+    context['data'] = r
+    return render(request, 'role.html', context)
+
+
+# Add new Role
+def add_role(request):
+    if request.method == 'POST':
+        context = {} 
+
+        rname = request.POST.get('role_name')
+        desc = request.POST.get('role_desc')
+
+        if not rname or not desc:
+            context['errormsg'] = 'Fill all the fields'
+        else:
+            Role.objects.create(role=rname, desc=desc)
+            context['success'] = 'New Role has been Added..!'
+        return redirect('/role') 
+
+    return render(request, 'role.html', context)
+
+
+# Delete Role
+def del_role(request, rid):
+    role = Role.objects.get(id = rid) 
+    role.delete()
+    return redirect('/role')
+
+
+# Edit Role
+def editrole(request, rid):
+    r = Role.objects.get(id=rid)
+
+    if request.method == "POST":
+        role = request.POST.get("role_name")
+        desc = request.POST.get("role_desc")
+
+        r.role = role
+        r.desc = desc
+        r.save()
+
+        return redirect("/role")  
+    
+
+
+def employee(request):
+    return render(request, 'employee.html')

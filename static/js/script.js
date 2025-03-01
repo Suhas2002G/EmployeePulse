@@ -57,3 +57,33 @@ function hideForm() {
   document.getElementById("deptEditForm").style.display = "none";
 }
 
+
+
+
+function showRoleForm() {
+  document.getElementById("roleForm").style.display = "flex";
+}
+function showRoleEditForm(name, desc, id) {
+  document.getElementById("roleEditForm").style.display = "flex";
+  document.getElementById("editRoleName").value = name;
+  document.getElementById("editRoleDesc").value = desc;
+  document.getElementById("editRoleForm").action = "/editrole/" + id;
+}
+
+function hideRoleForm() {
+  document.getElementById("roleForm").style.display = "none";
+  document.getElementById("roleEditForm").style.display = "none";
+}
+
+
+
+
+
+//Employee
+function showEmpForm() {
+  document.getElementById("empForm").style.display = "flex";
+}
+function hideempForm() {
+  document.getElementById("empForm").style.display = "none";
+  document.getElementById("roleEditForm").style.display = "none";
+}

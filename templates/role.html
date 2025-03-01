@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'main' %}
+<div class="dept-container">
+    <div class="dept-header">
+        <h2>Role Dashboard</h2>
+        <button class="dept-add-btn" onclick="showRoleForm()">Add New Role</button>
+    </div>
+
+    {% if successmsg %}
+        <div id="success" class="alert alert-success" role="alert">
+            {{ successmsg }}
+        </div>
+    {% elif errormsg %}
+        <div id="error" class="alert alert-danger" role="alert" data-redirect-url="/">
+            {{ errormsg }}
+        </div>
+    {% endif %}
+
+    <table class="dept-table">
+        <thead>
+            <tr>
+                <th>Sr No</th>
+                <th>Role</th>
+                <th>Description</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in data %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ i.role }}</td>
+                <td style="text-align: left;">{{ i.desc }}</td>
+                <td>
+                    <a href="#" onclick="showRoleEditForm('{{ i.role }}', '{{ i.desc }}', '{{ i.id }}')" 
+                        class="dept-edit-btn" style="text-decoration: none; color: black;">
+                        Edit
+                    </a>
+                </td>
+                <td>
+                    <a href="/del_role/{{ i.id }}" class="dept-delete-btn" style="text-decoration: none; color: black;">
+                        Delete
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Add Role Form (Popup Modal) -->
+<div class="dept-form-popup" id="roleForm">
+    <div class="dept-form-container">
+        <h3>Add New Role</h3>
+        <form method="POST" action="/add_role">
+            {% csrf_token %}
+            <label class="dept-form-label">Role Name:</label>
+            <input type="text" name="role_name" class="dept-form-input" required>
+
+            <label class="dept-form-label">Description:</label>
+            <textarea name="role_desc" class="dept-form-textarea" required></textarea>
+
+            <div class="dept-form-btn-group">
+                <button type="submit" class="dept-form-submit">Submit</button>
+                <button type="button" class="dept-form-cancel" onclick="hideRoleForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Edit Role Form (Popup Modal) -->
+<div class="dept-form-popup" id="roleEditForm">
+    <div class="dept-form-container">
+        <h3>Edit Role</h3>
+        <form method="POST" id="editRoleForm">
+            {% csrf_token %}
+            <label class="dept-form-label">Role Name:</label>
+            <input type="text" name="role_name" class="dept-form-input" id="editRoleName" required>
+
+            <label class="dept-form-label">Description:</label>
+            <textarea name="role_desc" class="dept-form-textarea" id="editRoleDesc" required></textarea>
+
+            <div class="dept-form-btn-group">
+                <button type="submit" class="dept-form-submit">Submit</button>
+                <button type="button" class="dept-form-cancel" onclick="hideRoleForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock 'main' %}

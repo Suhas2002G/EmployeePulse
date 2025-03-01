@@ -7,9 +7,9 @@ class DeptAdmin(admin.ModelAdmin):
     search_fields = ['dept_name']
     
 class RoleAdmin(admin.ModelAdmin):
-    list_display = ['uid','role','desc','created_at','updated_at']
-    list_filter = ['uid','role']
-    search_fields = ['uid','role']
+    list_display = ['role','desc','created_at','updated_at']
+    list_filter = ['role']
+    search_fields = ['role']
 
 admin.site.register(Dept,DeptAdmin)
 admin.site.register(Role,RoleAdmin)
