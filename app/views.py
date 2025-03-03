@@ -1,5 +1,10 @@
 from django.shortcuts import render, HttpResponse, redirect
-from django.contrib.auth.models import User        
+from django.contrib.auth.models import User  
+# since we have created CustomUser model therefore we need to to upate User model
+from django.contrib.auth import get_user_model 
+User = get_user_model() 
+
+
 from django.contrib.auth import authenticate       
 from django.contrib.auth import login,logout
 from .models import Dept, Role
