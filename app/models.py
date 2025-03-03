@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
+from django.contrib.auth.models import AbstractUser   
+
 
 # Department Model : 
 class Dept(models.Model):
@@ -24,16 +26,34 @@ class Role(models.Model):
 
     def __str__(self):
         return f'{self.uid.username} : {self.role}'
+ 
+
+# class Employee(AbstractUser):
+#     username = None
+#     mobile = models.CharField(max_length=10, unique=True)
+#     role = models.ForeignKey(Role, on_delete=models.CASCADE)
+#     dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
+#     doj = models.DateField(auto_now_add=True)
+
+#     def __str__(self):
+#         return self.username
+    
+
+
+
+
+
+
 
 
 
 # Employee : 
-class Employee(models.Model):
-    uid = models.ForeignKey(User, db_column='uid', on_delete=models.CASCADE)
-    mobile = models.CharField(max_length=10)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
-    doj = models.DateField(auto_now_add=True)
-#fname, lname,email, username, password will be done by Auth-User
-    def __str__(self):
-        return f'{self.uid.username} : {self.dept} - {self.role}'
+# class Employee(models.Model):
+#     uid = models.ForeignKey(User, db_column='uid', on_delete=models.CASCADE)
+#     mobile = models.CharField(max_length=10)
+#     role = models.ForeignKey(Role, on_delete=models.CASCADE)
+#     dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
+#     doj = models.DateField(auto_now_add=True)
+# #fname, lname,email, username, password will be done by Auth-User
+#     def __str__(self):
+#         return f'{self.uid.username} : {self.dept} - {self.role}'

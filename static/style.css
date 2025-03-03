@@ -1,3 +1,7 @@
+/* #3B1E54
+#9B7EBD
+#D4BEE4
+#EEEEEE */
 
 /* header.html starts here  */
 .navbar {
@@ -160,7 +164,7 @@
   transition: background 0.3s;
 }
 
-.side-item a {
+.sideanchor {
   text-decoration: none;
   color: black;
   font-weight: 500;

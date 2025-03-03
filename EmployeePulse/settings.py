@@ -29,6 +29,9 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# Extending the AbstractUser Model
+# AUTH_USER_MODEL = 'app.Employee'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -75,13 +78,24 @@ WSGI_APPLICATION = 'EmployeePulse.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# Mysql Database is used 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'employeepulse',
+        'HOST' : 'localhost',
+        'PORT' : 3306,
+        'USER' : 'root',
+        'PASSWORD' : 'root'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

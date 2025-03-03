@@ -1,6 +1,12 @@
 from django.contrib import admin
 from .models import Dept, Role
 
+
+# class Employee(admin.ModelAdmin):
+#     list_display = ['id','first_name','last_name','email','mobile', 
+#                     'dept', 'role', 'doj']
+
+
 class DeptAdmin(admin.ModelAdmin):
     list_display = ['dept_id','dept_name','desc','status', 'created_at', 'updated_at']
     list_filter = ['dept_name','status']
