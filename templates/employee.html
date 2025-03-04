@@ -8,14 +8,14 @@
         <button class="dept-add-btn" onclick="showEmpForm()">Add New Employee</button>
     </div>
 
-    {% if successmsg %}
-        <div id="success" class="alert alert-success" role="alert">
-            {{ successmsg }}
-        </div>
-    {% elif errormsg %}
-        <div id="error" class="alert alert-danger" role="alert" data-redirect-url="/">
-            {{ errormsg }}
-        </div>
+
+    <!-- Display Success & Error Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
     {% endif %}
 
     <table class="dept-table">
@@ -26,29 +26,38 @@
                 <th>Last Name</th>
                 <th>Email</th>
                 <th>Mobile</th>
-                <th>Department</th>
+                <th>Dept</th>
                 <th>Role</th>
-                <th>Username</th>
-                <th>Password</th>
+                <th>Date of Joining</th>
+                <!-- <th>Password</th> -->
                 <th>Edit</th>
                 <th>Delete</th>
 
             </tr>
         </thead>
         <tbody>
-            {% for i in data %}
+            {% for i in emp %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td> {{i.first_name}} </td>
+                <td> {{i.last_name}} </td>
+                <td> {{i.email}} </td>
+                <td> {{i.mobile}} </td>
+                <td> {{i.dept.dept_name}} </td>
+                <td> {{i.role.role}} </td>
+                <td> {{i.doj}} </td>
+                
+                <td> <a href="#" onclick="showEmpEditForm('{{ i.id }}','{{ i.first_name }}', '{{ i.last_name }}', '{{ i.email }}', '{{ i.mobile }}', '{{ i.dept.dept_name }}', '{{i.role.role}}')" 
+                    class="dept-edit-btn" style="text-decoration: none; color: black;">
+                    Edit
+                    </a>
+                </td>
+
+                <td> <a href="/del_emp/{{ i.id }}" class="dept-delete-btn" style="text-decoration: none; color: black;">
+                    Delete
+                    </a> 
+                </td>
+                
             </tr>
             {% endfor %}
         </tbody>
@@ -58,7 +67,7 @@
 
 
 
-<!-- Add Department Form (Popup Modal) -->
+<!-- Add Emp Form (Popup Modal) -->
 <div class="dept-form-popup" id="empForm">
     <div class="emp-form-container">
         <h3 class="titleEmpAdd">Add New Employee</h3>
@@ -75,7 +84,7 @@
             
             <div class="empform-row">
                 <label class="empform-label">Email:</label>
-                <input type="text" name="email" class="empform-input" required>
+                <input type="text" name="email" class="empform-input" >
         
                 <label class="empform-label mx-3"> Mobile No:</label>
                 <input type="text" name="mob" class="empform-input" required>
@@ -83,18 +92,28 @@
             
             <div class="empform-row">
                 <label class="empform-label">Department:</label>
-                <input type="text" name="dept" class="empform-input" required>
-        
-                <label class="empform-label mx-3"> Role:</label>
-                <input type="text" name="role" class="empform-input" required>
+                <select name="dept" class="empform-input" required>
+                    <option value="" disabled selected>Select Department</option>
+                    {% for i in dept %}
+                    <option value="{{ i.dept_id }}">{{ i.dept_name }}</option>
+                    {% endfor %}
+                </select>
+            
+                <label class="empform-label mx-3">Role:</label>
+                <select name="role" class="empform-input" required>
+                    <option value="" disabled selected>Select Role</option>
+                    {% for role in roles %}
+                    <option value="{{ role.id }}">{{ role.role }}</option>
+                    {% endfor %}
+                </select>
             </div>
             
             <div class="empform-row">
-                <label class="empform-label">Username:</label>
-                <input type="text" name="username" class="empform-input" required>
-        
-                <label class="empform-label mx-3"> Password:</label>
+                <label class="empform-label">Password:</label>
                 <input type="password" name="pass" class="empform-input" required>
+        
+                <label class="empform-label mx-3"> Confirm Password:</label>
+                <input type="password" name="cpass" class="empform-input" required>
             </div>
             
             <div class="empform-btn-group">
@@ -113,6 +132,62 @@
 
 
 
+<!-- Edit Emp Form (Popup Modal) -->
+<div class="dept-form-popup" id="empEditForm">
+    <div class="emp-form-container">
+        <h3 class="titleEmpAdd">Edit Employee Details</h3>
+        
+        <form method="POST" action="/edit_emp" class="empform-container">
+            {% csrf_token %}
+            <div class="empform-row">
+                <label class="empform-label">First Name:</label>
+                <input type="text" name="fname" id="editFname" class="empform-input" required>
+        
+                <label class="empform-label mx-3" > Last Name:</label>
+                <input type="text" name="lname" class="empform-input" required>
+            </div>
+            
+            <div class="empform-row">
+                <label class="empform-label">Email:</label>
+                <input type="text" name="email" id="editEmail" class="empform-input" >
+        
+                <label class="empform-label mx-3"> Mobile No:</label>
+                <input type="text" name="mob" id="editmob" class="empform-input" required>
+            </div>
+            
+            <div class="empform-row">
+                <label class="empform-label">Department:</label>
+                <select name="dept" id="editDept" class="empform-input" required>
+                    <option value="" disabled selected>Select Department</option>
+                    {% for i in dept %}
+                    <option value="{{ i.dept_id }}">{{ i.dept_name }}</option>
+                    {% endfor %}
+                </select>
+            
+                <label class="empform-label mx-3">Role:</label>
+                <select name="role" id="editRole" class="empform-input" required>
+                    <option value="" disabled selected>Select Role</option>
+                    {% for role in roles %}
+                    <option value="{{ role.id }}">{{ role.role }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="empform-row">
+                <label class="empform-label">Password:</label>
+                <input type="password" name="pass" class="empform-input" required>
+        
+                <label class="empform-label mx-3"> Confirm Password:</label>
+                <input type="password" name="cpass" class="empform-input" required>
+            </div>
+            
+            <div class="empform-btn-group">
+                <button type="submit" class="empform-submit">Submit</button>
+                <button type="button" class="empform-cancel" onclick="hideempForm()">Cancel</button>
+            </div>
+        </form>
+    </div>
+</div>
 
 
 

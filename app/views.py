@@ -7,8 +7,9 @@ User = get_user_model()
 
 from django.contrib.auth import authenticate       
 from django.contrib.auth import login,logout
-from .models import Dept, Role
-
+from .models import Dept, Role, Employee
+from django.contrib import messages
+from django.contrib.auth.hashers import make_password
 
 
 # Home page
@@ -116,4 +117,101 @@ def editrole(request, rid):
 
 
 def employee(request):
-    return render(request, 'employee.html')
+    dept = Dept.objects.all()
+    roles = Role.objects.all()
+    emp = Employee.objects.all().order_by('pk')
+    return render(request, 'employee.html', {'dept': dept, 'roles': roles, 'emp' : emp})
+
+
+
+
+
+def add_emp(request):
+    if request.method == "POST":
+        fn = request.POST.get('fname')
+        ln = request.POST.get('lname')
+        e = request.POST.get('email')
+        mob = request.POST.get('mob')
+        dept_id = request.POST.get('dept')
+        role_id = request.POST.get('role')
+        password = request.POST.get('pass')
+        cpass = request.POST.get('cpass')
+
+        print(fn)
+        print(ln)
+        print(e)
+        print(mob)
+        print(dept_id)
+        print(role_id)
+        # print(username)
+        print(make_password(password))
+
+        # Check if all fields are filled
+        if not all([fn, ln, e, mob, dept_id, role_id, password, cpass]):
+            messages.error(request, "All fields are required.")
+            return redirect('/employee')
+
+        # Validate mobile number
+        if not mob.isdigit() or len(mob) not in [10, 12]:
+            messages.error(request, "Invalid mobile number format.")
+            return redirect('/employee')
+        
+        # Check if all fields are filled
+        if password != cpass:
+            messages.error(request, "Password and Confirm Password should be same")
+            return redirect('/employee')
+        
+        # Validate department and role
+        department = Dept.objects.get(dept_id=dept_id)
+        role = Role.objects.get(id=role_id)
+
+        # Check for existing username (case insensitive)
+        if Employee.objects.filter(email__iexact=e).exists():
+            messages.error(request, "Email already taken. Choose a different one.")
+            return redirect('/employee')
+
+        # Create and save the Employee
+        Employee.objects.create(
+            first_name=fn,
+            last_name=ln,
+            email=e,
+            mobile=mob,
+            dept_id=dept_id,
+            role=role,
+            password=make_password(password)  # Secure password hashing
+        )
+
+        messages.success(request, "Employee added successfully!")
+        return redirect('/employee')
+
+    return render(request, 'employee.html')  # Ensure this template is correct
+
+
+
+
+# Edit Role
+def edit_emp(request, eid):
+    pass
+    # r = Role.objects.get(id=rid)
+
+    # if request.method == "POST":
+    #     role = request.POST.get("role_name")
+    #     desc = request.POST.get("role_desc")
+
+    #     r.role = role
+    #     r.desc = desc
+    #     r.save()
+
+    #     return redirect("/role")  
+
+
+
+
+
+
+
+
+
+
+
+

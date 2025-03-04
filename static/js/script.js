@@ -26,15 +26,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 //Sidebar
-  document.addEventListener("DOMContentLoaded", function () {
-    const menuItems = document.querySelectorAll(".side-item");
-    
-    menuItems.forEach(item => {
-        item.addEventListener("click", function () {
-            document.querySelector(".side-item.active")?.classList.remove("active");
-            this.classList.add("active");
-        });
-    });
+document.addEventListener("DOMContentLoaded", function () {
+  const menuItems = document.querySelectorAll(".side-item");
+  
+  menuItems.forEach(item => {
+      item.addEventListener("click", function () {
+          // Remove active class from all items
+          menuItems.forEach(i => i.classList.remove("active"));
+          
+          // Add active class to the clicked item
+          this.classList.add("active");
+      });
+  });
 });
 
 
@@ -85,5 +88,16 @@ function showEmpForm() {
 }
 function hideempForm() {
   document.getElementById("empForm").style.display = "none";
-  document.getElementById("roleEditForm").style.display = "none";
+  document.getElementById("empEditForm").style.display = "none";
+}
+
+function showEmpEditForm(id,fname,lname,email,mob,dept,role) {
+  document.getElementById("empEditForm").style.display = "flex";
+  document.getElementById("editFname").value = fname;
+  document.getElementById("editLname").value = lname;
+  document.getElementById("editEmail").value = email;
+  document.getElementById("editmob").value = mob;
+  document.getElementById("editDept").value = dept;
+  document.getElementById("editRole").value = role;
+  document.getElementById("editEmpForm").action = "/editemp/" + id;
 }
