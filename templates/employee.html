@@ -39,9 +39,9 @@
             {% for i in emp %}
             <tr>
                 <td>{{ forloop.counter }}</td>
-                <td> {{i.first_name}} </td>
-                <td> {{i.last_name}} </td>
-                <td> {{i.email}} </td>
+                <td> {{i.uid.first_name}} </td>
+                <td> {{i.uid.last_name}} </td>
+                <td> {{i.uid.email}} </td>
                 <td> {{i.mobile}} </td>
                 <td> {{i.dept.dept_name}} </td>
                 <td> {{i.role.role}} </td>

@@ -26,6 +26,7 @@ class Role(models.Model):
         return f'{self.role}'
  
 
+# Employee Model : 
 class Employee(models.Model):
     uid = models.ForeignKey(User, on_delete=models.CASCADE, db_column='uid')
     mobile = models.CharField(max_length=10, unique=True)
