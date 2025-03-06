@@ -1,10 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User  
-# since we have created CustomUser model therefore we need to to upate User model
-from django.contrib.auth import get_user_model 
-User = get_user_model() 
-
-
 from django.contrib.auth import authenticate       
 from django.contrib.auth import login,logout
 from .models import Dept, Role, Employee
@@ -15,6 +10,32 @@ from django.contrib.auth.hashers import make_password
 # Home page
 def home(request):
     return render(request,'home.html')
+
+# User Login
+def admin_login(request):
+    context = {}
+    if request.method == 'GET':
+        return render(request, 'admin-login.html', context)
+    
+    e = request.POST.get('ue')  # retrieve username
+    p = request.POST.get('upass')  # retrieve password
+    
+    user = authenticate(username=e, password=p)  # Authenticate user
+    if user:
+        if user.is_staff:  # Check for staff privileges
+            login(request, user)
+            return redirect('/department')  # Redirect to admin dashboard
+        context['errormsg'] = "You don't have Admin access"
+    else:
+        context['errormsg'] = 'Invalid Admin Credentials'
+    return render(request, 'admin-login.html', context) 
+
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('/')
+
 
 
 

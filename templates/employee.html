@@ -158,7 +158,7 @@
             <div class="empform-row">
                 <label class="empform-label">Department:</label>
                 <select name="dept" id="editDept" class="empform-input" required>
-                    <option value="" disabled selected>Select Department</option>
+                    <option value="" disabled selected>{{ i.dept_name }}</option>
                     {% for i in dept %}
                     <option value="{{ i.dept_id }}">{{ i.dept_name }}</option>
                     {% endfor %}

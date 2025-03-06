@@ -62,7 +62,123 @@
   }
 
 
+  * login.html starts here */
+  .container-bg-login {
+    background-image: url('/static/images/loginbg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover; /* Ensures the image covers the entire container */
+    background-position: center; /* Centers the image */
+    min-height: 95vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .login-container {
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 100%;
+    max-width: 400px;
+    opacity: 95%;
+  }
+  
+  /* Login Header */
+  .login-header {
+    font-size: 24px;
+    font-weight: bold;
+    color: #072b5b;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  /* Input Fields */
+  .input-group {
+    border: 1px solid #151727;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  
+  .input-group-text {
+    background-color: #072b5b;
+    color: #FFFFFF;
+    border: none;
+  }
+  
+  .input-group .form-control {
+    border: none;
+    box-shadow: none;
+    outline: none;
+  }
+  
+  /* Button */
+  .btn-custom {
+    background-color: #FF204E;
+    color: #FFFFFF;
+    border: none;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 10px;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-custom:hover {
+    background-color: #A0153E;
+  }
+  
+  /* Alert Box */
+  .custom-alert {
+    background-color: #FF204E;
+    color: #FFFFFF;
+    border-radius: 10px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .custom-alert i {
+    margin-right: 10px;
+    font-size: 18px;
+  }
+  
+  /* Forgot Password Link */
+  .forget-pass a {
+    color: #00224D;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .forget-pass a:hover {
+    text-decoration: underline;
+  }
+  
+  .dont-have-ac a{
+    color: #FF204E;
+    font-size: 14px;
+    text-decoration: none;
+  }
+  
+  .dont-have-ac a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .login-container {
+      padding: 20px;
+    }
+  }
+  
+  /* login.html ends here */
 
+
+
+
+  
 /* Home page starts here  */
 /* Hero Section */
 .home-hero {

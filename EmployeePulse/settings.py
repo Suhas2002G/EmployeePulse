@@ -28,8 +28,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-# Extending the AbstractUser Model
-AUTH_USER_MODEL = 'app.Employee'
+
 
 
 # Application definition
