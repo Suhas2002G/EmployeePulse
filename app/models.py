@@ -51,3 +51,11 @@ class Task(models.Model):
 
 
 
+class Reveive(models.Model):
+    eid = models.ForeignKey(Employee, on_delete=models.CASCADE, db_column='eid')
+    reveive_period = models.CharField(max_length=20, null=True)
+    rating = models.IntegerField()
+    improvement = models.CharField(max_length=2000)
+    reveive_date = models.DateTimeField(auto_now_add=True)
+
+

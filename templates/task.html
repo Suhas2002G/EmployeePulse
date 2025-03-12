@@ -24,21 +24,21 @@
         <div class="row mb-4">
             <div class="col-md-4">
                 <div class="statistic-card completed">
-                    <h3 id="completed-count">12</h3>
+                    <h3 id="completed-count"> {{completed_task}} </h3>
                     <p class="mb-0">Completed Tasks</p>
                     <i class="fas fa-check-circle"></i>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="statistic-card pending">
-                    <h3 id="pending-count">8</h3>
+                    <h3 id="pending-count">{{pending_task}}</h3>
                     <p class="mb-0">Pending Tasks</p>
                     <i class="fas fa-clock"></i>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="statistic-card in-progress">
-                    <h3 id="in-progress-count">5</h3>
+                    <h3 id="in-progress-count"> {{in_progress_task}} </h3>
                     <p class="mb-0">In Progress Tasks</p>
                     <i class="fas fa-spinner"></i>
                 </div>
@@ -46,7 +46,7 @@
         </div>
 
         <!-- Filters Row -->
-        <div class="card filter-card mb-4">
+        <!-- <div class="card filter-card mb-4">
             <div class="row">
                 <div class="col-md-3 mb-3">
                     <label for="filterEmployee" class="form-label">Filter by Employee</label>
@@ -66,14 +66,14 @@
                         <option value="in-progress">In Progress</option>
                     </select>
                 </div>
-                <!-- <div class="col-md-3 mb-3">
+                <div class="col-md-3 mb-3">
                     <label for="fromDate" class="form-label">From Date</label>
                     <input type="date" class="form-control" id="fromDate">
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="toDate" class="form-label">To Date</label>
                     <input type="date" class="form-control" id="toDate">
-                </div> -->
+                </div>
             </div>
             <div class="row">
                 <div class="col-12 text-end">
@@ -81,7 +81,7 @@
                     <button class="btn btn-secondary" id="resetFilters">Reset</button>
                 </div>
             </div>
-        </div>
+        </div> -->
 
         <!-- Tasks Table -->
         <div class="card">

@@ -27,5 +27,9 @@ urlpatterns = [
     path('task', views.task),
     # path('addtask_form', views.addtask_form),
     path('add_task', views.add_task),
+
+
+    path('reveive', views.reveive),
+
 ]
 urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

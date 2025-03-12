@@ -9,7 +9,7 @@ from django.contrib.auth.hashers import make_password
 
 # Home page
 def home(request):
-    return render(request,'home.html')
+    return render(request,'home2.html')
 
 # User Login
 def admin_login(request):
@@ -252,6 +252,13 @@ def task(request):
     task = Task.objects.all()
     context['task']=task
 
+    pending_task = Task.objects.filter(status='Pending').count()
+    in_progress_task = Task.objects.filter(status='In-Progress').count()
+    completed_task = Task.objects.filter(status='Completed').count()
+
+    context['pending_task']= pending_task
+    context['in_progress_task']=in_progress_task
+    context['completed_task']=completed_task
     return render(request, 'task.html',context)
 
 
@@ -302,3 +309,28 @@ def add_task(request):
         return redirect("/task")  # Replace with actual task listing page
 
     return redirect("/task")  # Fallback for GET requests
+
+
+
+
+
+
+
+
+
+
+
+
+
+def reveive(request):
+    if request.method == 'GET':
+        context={}
+        emp= Employee.objects.all()
+        context['emp']=emp
+        return render(request, 'reveive.html', context)
+    else:
+        emp = request.POST.get('')
+        period = request.POST.get('')
+        rating = request.POST.get('')
+        improvement = request.POST.get('')
+

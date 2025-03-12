@@ -1,0 +1,195 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+
+
+    <style>
+       
+        
+        .rev-title {
+            color: #0d6efd;
+            font-weight: 600;
+        }
+        
+        .rev-form-container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .rev-form-section {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .rev-btn-submit {
+            background-color: #0d6efd;
+            color: white;
+            padding: 8px 24px;
+        }
+        
+        .rev-btn-cancel {
+            background-color: #6c757d;
+            color: white;
+            padding: 8px 24px;
+        }
+        
+        .rev-rating-label {
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        
+        .rev-textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <main class="container mt-4">
+        <div class="row">
+            <div class="col-lg-10 mx-auto">
+                <div class="rev-form-container">
+                    <h2 class="mb-4">Add a Review</h2>
+                    
+                    
+                    <form id="reviewForm" action="/reveive">
+                        {% csrf_token %}
+                        <!-- Employee Selection Section -->
+                        <div class="rev-form-section">
+                            <div class="mb-3">
+                                <label for="employeeSelect" class="form-label fw-bold">Select Employee</label>
+                                <select class="form-select rev-employee-select" id="employeeSelect" required>
+                                    <option value="" selected disabled>-- Select an employee --</option>
+                                    {% for i in emp %}
+                                    <option value="{i.id}">{{i.uid.first_name}} {{i.uid.last_name}} </option>
+                                    {% endfor %}
+                                </select>
+                                
+                            </div>
+                        </div>
+                        
+                        <!-- Review Period Section -->
+                        <div class="rev-form-section">
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">Review Period</label>
+                                <div class="d-flex gap-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-period-monthly" type="radio" name="reviewPeriod" id="periodMonthly" value="monthly" checked>
+                                        <label class="form-check-label" for="periodMonthly">
+                                            Monthly
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-period-quarterly" type="radio" name="reviewPeriod" id="periodQuarterly" value="quarterly">
+                                        <label class="form-check-label" for="periodQuarterly">
+                                            Quarterly
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-period-annual" type="radio" name="reviewPeriod" id="periodAnnual" value="annual">
+                                        <label class="form-check-label" for="periodAnnual">
+                                            Annual
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                        
+                        <!-- Performance Metrics Section -->
+                        <div class="rev-form-section">
+                            <h4 class="mb-3">Performance Metrics</h4>
+                            
+                            <div class="mb-4">
+                                <!-- <label class="rev-rating-label">Technical Skills</label> -->
+                                <div class="d-flex gap-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill1" value="1">
+                                        <label class="form-check-label" for="techSkill1">1</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill2" value="2">
+                                        <label class="form-check-label" for="techSkill2">2</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill3" value="3">
+                                        <label class="form-check-label" for="techSkill3">3</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill4" value="4">
+                                        <label class="form-check-label" for="techSkill4">4</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" checked>
+                                        <label class="form-check-label" for="techSkill5">5</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" checked>
+                                        <label class="form-check-label" for="techSkill5">6</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" checked>
+                                        <label class="form-check-label" for="techSkill5">7</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" checked>
+                                        <label class="form-check-label" for="techSkill5">8</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" checked>
+                                        <label class="form-check-label" for="techSkill5">9</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" checked>
+                                        <label class="form-check-label" for="techSkill5">10</label>
+                                    </div>
+                                </div>
+                                <div class="form-text">1 = Needs significant improvement, 10 = Exceptional</div>
+                            </div>
+
+                        </div>
+                        
+                        <!-- Feedback Section -->
+                        <div class="rev-form-section">  
+                            <div class="mb-3">
+                                <label for="improvements" class="form-label fw-bold">Areas for Improvement</label>
+                                <textarea class="form-control rev-textarea rev-improvements" id="improvements" rows="3" placeholder="Identify areas where the employee can improve..."></textarea>
+                            </div>
+                        </div>
+                        
+                        
+                                
+                        
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-end gap-2 mt-4">
+                            <a href="/reveive" type="submit" class="btn rev-btn-submit">Submit Review</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Simple form validation example
+        document.getElementById('reviewForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Review submitted successfully!');
+        });
+    </script>
+
+
+
+
+{% endblock 'main' %}
+
+

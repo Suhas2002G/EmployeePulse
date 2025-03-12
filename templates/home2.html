@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EmployeePulse - Modern HRM System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --accent: #7209b7;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .home-navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 15px 0;
+        }
+        
+        .home-brand {
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.8rem;
+        }
+        
+        .home-brand span {
+            color: var(--accent);
+        }
+        
+        .home-nav-link {
+            color: var(--dark);
+            font-weight: 500;
+            margin: 0 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .home-nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .home-nav-link.active {
+            color: var(--primary);
+        }
+        
+        .home-btn-primary {
+            background-color: var(--primary);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .home-btn-primary:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+        }
+        
+        .home-btn-outline {
+            border: 2px solid var(--primary);
+            background-color: transparent;
+            color: var(--primary);
+            padding: 9px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .home-btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .home-hero {
+            padding: 120px 0 80px;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.1) 0%, rgba(114, 9, 183, 0.1) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .home-hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 24px;
+            line-height: 1.2;
+            color: var(--dark);
+        }
+        
+        .home-hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 32px;
+            color: #6c757d;
+            line-height: 1.6;
+        }
+        
+        .home-hero-image {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .home-features {
+            padding: 100px 0;
+        }
+        
+        .home-section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .home-section-title h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: var(--dark);
+        }
+        
+        .home-section-title p {
+            font-size: 1.1rem;
+            color: #6c757d;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .home-feature-box {
+            padding: 30px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .home-feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .home-feature-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            font-size: 1.8rem;
+            color: white;
+        }
+        
+        .home-feature-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .home-feature-text {
+            color: #6c757d;
+            margin-bottom: 0;
+            line-height: 1.6;
+        }
+        
+        .home-testimonials {
+            padding: 100px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .home-testimonial-card {
+            padding: 30px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+            margin: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .home-testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .home-testimonial-quote {
+            font-size: 1.1rem;
+            color: #505050;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        
+        .home-testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .home-author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 16px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-weight: bold;
+        }
+        
+        .home-author-info h5 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .home-author-info p {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0;
+        }
+        
+        .home-pricing {
+            padding: 100px 0;
+        }
+        
+        .home-pricing-card {
+            padding: 40px 30px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .home-pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .home-pricing-popular {
+            border-color: var(--primary);
+            position: relative;
+        }
+        
+        .home-popular-badge {
+            position: absolute;
+            top: -12px;
+            right: 30px;
+            background: var(--primary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .home-pricing-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+        
+        .home-pricing-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 24px;
+            text-align: center;
+        }
+        
+        .home-price-period {
+            font-size: 1rem;
+            color: #6c757d;
+            font-weight: 400;
+        }
+        
+        .home-pricing-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+            flex-grow: 1;
+        }
+        
+        .home-pricing-features li {
+            margin-bottom: 12px;
+            color: #505050;
+            display: flex;
+            align-items: center;
+        }
+        
+        .home-pricing-features li i {
+            color: #4cc9f0;
+            margin-right: 8px;
+        }
+        
+        .home-cta {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .home-cta h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 24px;
+        }
+        
+        .home-cta p {
+            font-size: 1.2rem;
+            margin-bottom: 32px;
+            opacity: 0.9;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .home-btn-light {
+            background-color: white;
+            color: var(--primary);
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+        
+        .home-btn-light:hover {
+            background-color: var(--light);
+            color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.3);
+        }
+        
+        .home-footer {
+            padding: 80px 0 30px;
+            background-color: #212529;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .home-footer-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+        
+        .home-footer-brand span {
+            color: var(--success);
+        }
+        
+        .home-footer-text {
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .home-footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 24px;
+        }
+        
+        .home-footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .home-footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .home-footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .home-footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .home-social-links {
+            display: flex;
+            margin-top: 16px;
+        }
+        
+        .home-social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .home-social-link:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+        
+        .home-copyright {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        @media (max-width: 768px) {
+            .home-hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .home-section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .home-cta h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg sticky-top home-navbar">
+        <div class="container">
+            <a class="navbar-brand home-brand" href="/">Employee<span>Pulse</span></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link home-nav-link active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link home-nav-link" href="#features">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link home-nav-link" href="#testimonials">Testimonials</a>
+                    </li>
+                    
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn home-btn-outline" href="#">Login</a>
+                    </li>
+                    <!-- <li class="nav-item ms-lg-2">
+                        <a class="btn home-btn-primary text-white" href="#">Get Started</a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="home-hero" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 home-hero-content">
+                    <h1>Transform Your HR Management Experience</h1>
+                    <p>EmployeePulse helps modern businesses streamline HR processes, boost employee engagement, and make data-driven decisions with our all-in-one HRM solution.</p>
+                    <div class="d-flex flex-wrap">
+                        <a href="/task" class="btn home-btn-primary text-white me-3 mb-2 mb-md-0">Get Started </a>
+                        <!-- <a href="#" class="btn home-btn-outline">Request Demo</a> -->
+                    </div>
+                </div>
+                <div class="col-lg-6 mt-5 mt-lg-0 text-center">
+                    <img src="https://www.figma.com/community/resource/eb310a9e-54ac-45ad-aaa2-5c81b36ecf91/thumbnail" alt="EmployeePulse Dashboard" class="img-fluid home-hero-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="home-features" id="features">
+        <div class="container">
+            <div class="home-section-title">
+                <h2>Powerful Features for Modern HR Teams</h2>
+                <p>Our comprehensive HR management system simplifies your daily operations and empowers your team.</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="home-feature-box">
+                        <div class="home-feature-icon" style="background-color: #4361ee;">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="home-feature-title">Employee Management</h3>
+                        <p class="home-feature-text">Complete employee profiles, document management, and organizational charts to keep everything organized in one place.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="home-feature-box">
+                        <div class="home-feature-icon" style="background-color: #3a0ca3;">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="home-feature-title">Performance Analytics</h3>
+                        <p class="home-feature-text">Powerful performance tracking with customizable KPIs, 360° feedback, and intelligent reporting dashboards.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="home-feature-box">
+                        <div class="home-feature-icon" style="background-color: #7209b7;">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h3 class="home-feature-title">Time & Attendance</h3>
+                        <p class="home-feature-text">Effortlessly manage shifts, leaves, and attendance with our intuitive time tracking system and mobile check-ins.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="home-feature-box">
+                        <div class="home-feature-icon" style="background-color: #4cc9f0;">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <h3 class="home-feature-title">Payroll Management</h3>
+                        <p class="home-feature-text">Automated payroll processing, tax calculations, and direct deposits with compliance built in for multiple regions.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="home-feature-box">
+                        <div class="home-feature-icon" style="background-color: #4361ee;">
+                            <i class="fas fa-laptop"></i>
+                        </div>
+                        <h3 class="home-feature-title">Remote Work Tools</h3>
+                        <p class="home-feature-text">Enable productive remote work with virtual check-ins, team collaboration tools, and remote employee engagement features.</p>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="home-feature-box">
+                        <div class="home-feature-icon" style="background-color: #3a0ca3;">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <h3 class="home-feature-title">Learning Management</h3>
+                        <p class="home-feature-text">Integrated learning platform with course creation tools, progress tracking, and certification management.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="home-testimonials" id="testimonials">
+        <div class="container">
+            <div class="home-section-title">
+                <h2>Trusted by HR Teams Worldwide</h2>
+                <p>Hear what our customers have to say about how EmployeePulse has transformed their HR operations.</p>
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="home-testimonial-card">
+                        <p class="home-testimonial-quote">"EmployeePulse has reduced our HR admin time by 70%. The performance analytics have been a game-changer for our annual review process."</p>
+                        <div class="home-testimonial-author">
+                            <div class="home-author-avatar">SA</div>
+                            <div class="home-author-info">
+                                <h5>Sarah Anderson</h5>
+                                <p>HR Director, TechNova Inc</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="home-testimonial-card">
+                        <p class="home-testimonial-quote">"The employee self-service portal has significantly reduced our HR team's workload while improving overall employee satisfaction."</p>
+                        <div class="home-testimonial-author">
+                            <div class="home-author-avatar">MJ</div>
+                            <div class="home-author-info">
+                                <h5>Michael Johnson</h5>
+                                <p>CHRO, GlobalFirm</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="home-testimonial-card">
+                        <p class="home-testimonial-quote">"As we scaled from 50 to 500 employees, EmployeePulse provided the robust foundation we needed to manage our growing workforce effectively."</p>
+                        <div class="home-testimonial-author">
+                            <div class="home-author-avatar">RL</div>
+                            <div class="home-author-info">
+                                <h5>Rachel Lee</h5>
+                                <p>People Ops Manager, StartupGrowth</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Call to Action -->
+    <section class="home-cta">
+        <div class="container">
+            <h2>Ready to Transform Your HR Experience?</h2>
+            <p>Join thousands of companies that trust EmployeePulse to manage their most valuable asset - their people.</p>
+            <a href="#" class="btn home-btn-light">Start Your Free 14-Day Trial</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="home-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-5 mb-lg-0">
+                    <a href="#" class="home-footer-brand">Employee<span>Pulse</span></a>
+                    <p class="home-footer-text">Transform your HR processes with our comprehensive human resource management system designed for modern businesses.</p>
+                    <div class="home-social-links">
+                        <a href="#" class="home-social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="home-social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="home-social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="home-social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+                    <h4 class="home-footer-title">Company</h4>
+                    <ul class="home-footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+                    <h4 class="home-footer-title">Features</h4>
+                    <ul class="home-footer-links">
+                        <li><a href="#">Employee Management</a></li>
+                        <li><a href="#">Time & Attendance</a></li>
+                        <li><a href="#">Payroll</a></li>
+                        <li><a href="#">Performance</a></li>
+                        <li><a href="#">Learning</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-lg-2 mb-4 mb-md-0">
+                    <h4 class="home-footer-title">Resources</h4>
+                    <ul class="home-footer-links">
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Docs</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Webinars</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 col-lg-2">
+                    <h4 class="home-footer-title">Legal</h4>
+                    <ul class="home-footer-links">
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Security</a></li>
+                        <li><a href="#">GDPR Compliance</a></li>
+                        <li><a href="#">Cookies Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            </div>
+            </footer>
+            </body>
+            </html>
