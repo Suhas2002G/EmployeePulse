@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User  
 from django.contrib.auth import authenticate       
 from django.contrib.auth import login,logout
-from .models import Dept, Role, Employee, Task
+from .models import Dept, Role, Employee, Task, Reveive
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 
@@ -263,6 +263,8 @@ def task(request):
 
 
 
+
+
 def add_task(request):
     context={}
     if request.method == 'GET':
@@ -316,7 +318,11 @@ def add_task(request):
 
 
 
-
+def reveive_dash(request):
+    context={}
+    reveive = Reveive.objects.all()
+    context['reveive']=reveive
+    return render(request, 'reveive-dash.html',context)
 
 
 
@@ -328,9 +334,27 @@ def reveive(request):
         emp= Employee.objects.all()
         context['emp']=emp
         return render(request, 'reveive.html', context)
-    else:
-        emp = request.POST.get('')
-        period = request.POST.get('')
-        rating = request.POST.get('')
-        improvement = request.POST.get('')
+    if request.method == 'POST':
+        emp = request.POST.get('emp')
+        period = request.POST.get('reviewPeriod')
+        rating = request.POST.get('techSkill')
+        improvement = request.POST.get('improvement')
+
+        print(emp)
+        print(period)
+        print(rating)
+        print(improvement)
+
+        eid = Employee.objects.get(id=emp)
+        print(eid)
+
+        Reveive.objects.create(
+            eid=eid,
+            rating=rating,
+            reveive_period = period,
+            improvement=improvement
+        )
+
+
+        return render(request, 'reveive-dash.html')
 

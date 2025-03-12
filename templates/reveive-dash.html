@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Reveive Dashboard</h2>
+            <a class="btn btn-primary" href="/reveive">
+                <i class="fas fa-plus-circle"></i> Add Reveive for Employee
+            </a>
+        </div> -->
+
+        <div class="dept-header mt-3">
+            <h2>Reveive Dashboard</h2>
+            <a class="btn btn-primary" href="/reveive">
+                <i class="fas fa-plus-circle"></i> Add Reveive for Employee
+            </a>
+        </div>
+
+        <!-- Display Success & Error Messages -->
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+        
+
+
+        <!-- Tasks Table -->
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover task-table">
+                        <thead>
+                            <tr>
+                                <th>Sr.No</th>
+                                <th>Emp Name</th>
+                                <th>Rating</th>
+                                <th>Period</th>
+                                <th>Improvement</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody id="taskTableBody">
+                            {% for i in reveive %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{i.eid.uid.first_name}} {{i.eid.uid.last_name}}</td>
+                                <td>{{i.rating}}</td>
+                                <td><span class="badge rounded-pill badge-priority-high">{{i.reveive_period}}</span></td>
+                                <td>{{i.improvement}}</td>
+                                
+                                
+                            </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Task Details Modal -->
+    <div class="modal" id="taskDetailsModal" tabindex="-1" aria-labelledby="taskDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="taskDetailsModalLabel">Task Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Task Name:</strong> Develop Dashboard UI</p>
+                            <p><strong>Assigned To:</strong> John Doe</p>
+                            <p><strong>Priority:</strong> <span class="badge rounded-pill badge-priority-high">High</span></p>
+                            <p><strong>Type:</strong> Individual</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Start Date:</strong> March 1, 2025</p>
+                            <p><strong>Due Date:</strong> March 15, 2025</p>
+                            <p><strong>Status:</strong> <span class="badge rounded-pill badge-status-in-progress">In Progress</span></p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Description</h6>
+                        <p>Create an intuitive and responsive dashboard interface for the HR Management System. The dashboard should include statistics, quick access to important features, and recent activities. Follow the provided design guidelines and ensure compatibility with all major browsers.</p>
+                    </div>
+                    <!-- <div class="mb-3">
+                        <h6>Progress Updates</h6>
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-1"><strong>John Doe</strong></p>
+                                    <small>March 4, 2025</small>
+                                </div>
+                                <p class="mb-0">Completed the wireframes and started working on the HTML/CSS implementation.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-1"><strong>John Doe</strong></p>
+                                    <small>March 6, 2025</small>
+                                </div>
+                                <p class="mb-0">Finished the main layout and implemented responsive design. Working on the data visualization components now.</p>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+{% endblock 'main' %}

@@ -59,16 +59,16 @@
                     <h2 class="mb-4">Add a Review</h2>
                     
                     
-                    <form id="reviewForm" action="/reveive">
+                    <form id="reviewForm" action="/reveive" method="post">
                         {% csrf_token %}
                         <!-- Employee Selection Section -->
                         <div class="rev-form-section">
                             <div class="mb-3">
                                 <label for="employeeSelect" class="form-label fw-bold">Select Employee</label>
-                                <select class="form-select rev-employee-select" id="employeeSelect" required>
+                                <select class="form-select rev-employee-select" name="emp" id="employeeSelect" required>
                                     <option value="" selected disabled>-- Select an employee --</option>
                                     {% for i in emp %}
-                                    <option value="{i.id}">{{i.uid.first_name}} {{i.uid.last_name}} </option>
+                                    <option value="{{i.id}}">{{i.uid.first_name}} {{i.uid.last_name}} </option>
                                     {% endfor %}
                                 </select>
                                 
@@ -128,23 +128,23 @@
                                         <label class="form-check-label" for="techSkill4">4</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" checked>
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" >
                                         <label class="form-check-label" for="techSkill5">5</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" checked>
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" >
                                         <label class="form-check-label" for="techSkill5">6</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" checked>
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" >
                                         <label class="form-check-label" for="techSkill5">7</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" checked>
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" >
                                         <label class="form-check-label" for="techSkill5">8</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" checked>
+                                        <input class="form-check-input rev-rating-tech" type="radio" name="techSkill" id="techSkill5" value="5" >
                                         <label class="form-check-label" for="techSkill5">9</label>
                                     </div>
                                     <div class="form-check">
@@ -160,8 +160,8 @@
                         <!-- Feedback Section -->
                         <div class="rev-form-section">  
                             <div class="mb-3">
-                                <label for="improvements" class="form-label fw-bold">Areas for Improvement</label>
-                                <textarea class="form-control rev-textarea rev-improvements" id="improvements" rows="3" placeholder="Identify areas where the employee can improve..."></textarea>
+                                <label for="improvements"  class="form-label fw-bold">Areas for Improvement</label>
+                                <textarea name="improvement" class="form-control rev-textarea rev-improvements" id="improvements" rows="3" placeholder="Identify areas where the employee can improve..."></textarea>
                             </div>
                         </div>
                         
@@ -170,7 +170,7 @@
                         
                         <!-- Action Buttons -->
                         <div class="d-flex justify-content-end gap-2 mt-4">
-                            <a href="/reveive" type="submit" class="btn rev-btn-submit">Submit Review</a>
+                            <button type="submit" class="btn rev-btn-submit">Submit Review</button>
                         </div>
                     </form>
                 </div>
@@ -179,13 +179,7 @@
     </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Simple form validation example
-        document.getElementById('reviewForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Review submitted successfully!');
-        });
-    </script>
+    
 
 
 
