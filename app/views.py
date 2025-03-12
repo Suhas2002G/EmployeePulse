@@ -12,10 +12,10 @@ def home(request):
     return render(request,'home2.html')
 
 # User Login
-def admin_login(request):
+def user_login(request):
     context = {}
     if request.method == 'GET':
-        return render(request, 'admin-login.html', context)
+        return render(request, 'login.html', context)
     
     e = request.POST.get('ue')  # retrieve username
     p = request.POST.get('upass')  # retrieve password
@@ -24,11 +24,13 @@ def admin_login(request):
     if user:
         if user.is_staff:  # Check for staff privileges
             login(request, user)
-            return redirect('/department')  # Redirect to admin dashboard
+            return redirect('/task')  # Redirect to admin dashboard
         context['errormsg'] = "You don't have Admin access"
     else:
         context['errormsg'] = 'Invalid Admin Credentials'
-    return render(request, 'admin-login.html', context) 
+    return render(request, 'login.html', context)  # Render the login page with error message
+
+
 
 
 

@@ -1,0 +1,50 @@
+
+{% include 'header.html' %}
+{% load static %}
+
+<div class="main-login-container">
+
+    <a href="/" class="home-link">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+    
+    <div class="login-container">
+        <div class="login-card">
+            {% if errormsg %}
+                <div class="alert alert-danger custom-alert" role="alert">
+                <i class="bi bi-x-circle"></i> {{ errormsg }}</div>
+            {% endif %}
+            <div class="login-header">
+                <div class="login-logo">Employee<span>Pulse</span></div>
+                <div class="login-subheading">Modern HR Management System</div>
+            </div>
+            <div class="login-body">
+                <h2 class="login-title">Login to Your Account</h2>
+                
+                <form id="loginForm" method="post" action="/user_login">
+                    {% csrf_token %}
+                    <div class="form-floating">
+                        <input  class="form-control" id="emailInput" name="ue" placeholder="Enter Email" required>
+                        <label for="emailInput">Email address</label>
+                    </div>
+                    
+                    <div class="form-floating">
+                        <input type="password" class="form-control" id="passwordInput" name="upass" placeholder="Password" required>
+                        <label for="passwordInput">Password</label>
+                    </div>
+                    
+                    <div class="remember-row">
+                        
+                        <a href="#" class="forgot-link">Forgot password?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn login-btn">
+                        Sign In
+                    </button>
+                </form>
+                
+       
+            </div>
+        </div>
+    </div>
+</div>
