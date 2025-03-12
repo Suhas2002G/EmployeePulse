@@ -356,5 +356,23 @@ def reveive(request):
         )
 
 
-        return render(request, 'reveive-dash.html')
+        return redirect('/reveive_dash')
 
+
+
+
+def leave_dash(request):
+    context={}
+    return render(request, 'leave-dash.html', context)
+
+
+
+
+
+
+
+
+
+def leave(request):
+    context={}
+    return render(request, 'leave.html', context)

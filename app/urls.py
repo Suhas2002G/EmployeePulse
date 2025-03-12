@@ -32,5 +32,8 @@ urlpatterns = [
     path('reveive', views.reveive),
     path('reveive-dash', views.reveive_dash),
 
+    path('leave', views.leave),
+    path('leave-dash', views.leave_dash),
+
 ]
 urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
