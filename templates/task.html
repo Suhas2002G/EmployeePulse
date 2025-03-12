@@ -1,0 +1,342 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Task Management Dashboard</h2>
+            <a class="btn btn-primary" href="/add_task">
+                <i class="fas fa-plus-circle"></i> Create Task
+            </a>
+        </div>
+
+        <!-- Display Success & Error Messages -->
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+        <!-- Statistics Row -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="statistic-card completed">
+                    <h3 id="completed-count">12</h3>
+                    <p class="mb-0">Completed Tasks</p>
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="statistic-card pending">
+                    <h3 id="pending-count">8</h3>
+                    <p class="mb-0">Pending Tasks</p>
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="statistic-card in-progress">
+                    <h3 id="in-progress-count">5</h3>
+                    <p class="mb-0">In Progress Tasks</p>
+                    <i class="fas fa-spinner"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters Row -->
+        <div class="card filter-card mb-4">
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <label for="filterEmployee" class="form-label">Filter by Employee</label>
+                    <select class="form-select" id="filterEmployee">
+                        <option value="">All Employees</option>
+                        {% for i in emp %}
+                        <option value="{{i.id}}">{{i.uid.first_name}} {{i.uid.last_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="filterStatus" class="form-label">Filter by Status</label>
+                    <select class="form-select" id="filterStatus">
+                        <option value="">All Status</option>
+                        <option value="completed">Completed</option>
+                        <option value="pending">Pending</option>
+                        <option value="in-progress">In Progress</option>
+                    </select>
+                </div>
+                <!-- <div class="col-md-3 mb-3">
+                    <label for="fromDate" class="form-label">From Date</label>
+                    <input type="date" class="form-control" id="fromDate">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="toDate" class="form-label">To Date</label>
+                    <input type="date" class="form-control" id="toDate">
+                </div> -->
+            </div>
+            <div class="row">
+                <div class="col-12 text-end">
+                    <button class="btn btn-primary" id="applyFilters">Apply Filters</button>
+                    <button class="btn btn-secondary" id="resetFilters">Reset</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tasks Table -->
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover task-table">
+                        <thead>
+                            <tr>
+                                <th>Sr.No</th>
+                                <th>Task Name</th>
+                                <th>Assigned To</th>
+                                <th>Priority</th>
+                                <th>Type</th>
+                                <th>Start Date</th>
+                                <th>Due Date</th>
+                                <th>Status</th>
+                                <!-- <th>Actions</th> -->
+                            </tr>
+                        </thead>
+                        <tbody id="taskTableBody">
+                            {% for i in task %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{i.title}}</td>
+                                <td>{{i.assigned_to.uid.first_name}}</td>
+                                <td><span class="badge rounded-pill badge-priority-high">{{i.priority}}</span></td>
+                                <td>{{i.task_type}}</td>
+                                <td>{{i.start_date}}</td>
+                                <td>{{i.end_date}}</td>
+                                <td><span class="badge rounded-pill badge-status-in-progress">{{i.status}}</span></td>
+                                <!-- <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">
+                                        <i class="fas fa-eye"></i> See Details
+                                    </button>
+                                </td> -->
+                            </tr>
+                            {% endfor %}
+                            <!-- <tr>
+                                <td>2</td>
+                                <td>Create API Documentation</td>
+                                <td>Jane Smith</td>
+                                <td><span class="badge rounded-pill badge-priority-medium">Medium</span></td>
+                                <td>Individual</td>
+                                <td>2025-03-05</td>
+                                <td>2025-03-10</td>
+                                <td><span class="badge rounded-pill badge-status-completed">Completed</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">
+                                        <i class="fas fa-eye"></i> See Details
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Redesign Logo</td>
+                                <td>Michael Johnson</td>
+                                <td><span class="badge rounded-pill badge-priority-low">Low</span></td>
+                                <td>Individual</td>
+                                <td>2025-03-02</td>
+                                <td>2025-03-20</td>
+                                <td><span class="badge rounded-pill badge-status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">
+                                        <i class="fas fa-eye"></i> See Details
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>System Testing</td>
+                                <td>John Doe</td>
+                                <td><span class="badge rounded-pill badge-priority-high">High</span></td>
+                                <td>Team</td>
+                                <td>2025-03-10</td>
+                                <td>2025-03-25</td>
+                                <td><span class="badge rounded-pill badge-status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">
+                                        <i class="fas fa-eye"></i> See Details
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>5</td>
+                                <td>Create User Manual</td>
+                                <td>Jane Smith</td>
+                                <td><span class="badge rounded-pill badge-priority-medium">Medium</span></td>
+                                <td>Individual</td>
+                                <td>2025-03-07</td>
+                                <td>2025-03-21</td>
+                                <td><span class="badge rounded-pill badge-status-in-progress">In Progress</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">
+                                        <i class="fas fa-eye"></i> See Details
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>6</td>
+                                <td>Prepare Monthly Report</td>
+                                <td>Michael Johnson</td>
+                                <td><span class="badge rounded-pill badge-priority-medium">Medium</span></td>
+                                <td>Individual</td>
+                                <td>2025-03-01</td>
+                                <td>2025-03-05</td>
+                                <td><span class="badge rounded-pill badge-status-completed">Completed</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">
+                                        <i class="fas fa-eye"></i> See Details
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>7</td>
+                                <td>Client Meeting Preparation</td>
+                                <td>John Doe</td>
+                                <td><span class="badge rounded-pill badge-priority-high">High</span></td>
+                                <td>Team</td>
+                                <td>2025-03-12</td>
+                                <td>2025-03-14</td>
+                                <td><span class="badge rounded-pill badge-status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">
+                                        <i class="fas fa-eye"></i> See Details
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>8</td>
+                                <td>Database Optimization</td>
+                                <td>Jane Smith</td>
+                                <td><span class="badge rounded-pill badge-priority-high">High</span></td>
+                                <td>Individual</td>
+                                <td>2025-03-08</td>
+                                <td>2025-03-18</td>
+                                <td><span class="badge rounded-pill badge-status-in-progress">In Progress</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">
+                                        <i class="fas fa-eye"></i> See Details
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>9</td>
+                                <td>UI Testing</td>
+                                <td>Michael Johnson</td>
+                                <td><span class="badge rounded-pill badge-priority-medium">Medium</span></td>
+                                <td>Team</td>
+                                <td>2025-03-15</td>
+                                <td>2025-03-20</td>
+                                <td><span class="badge rounded-pill badge-status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">
+                                        <i class="fas fa-eye"></i> See Details
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>10</td>
+                                <td>Deploy New Features</td>
+                                <td>John Doe</td>
+                                <td><span class="badge rounded-pill badge-priority-high">High</span></td>
+                                <td>Team</td>
+                                <td>2025-03-20</td>
+                                <td>2025-03-22</td>
+                                <td><span class="badge rounded-pill badge-status-pending">Pending</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">
+                                        <i class="fas fa-eye"></i> See Details
+                                    </button>
+                                </td>
+                            </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <!-- Pagination -->
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item disabled">
+                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Task Details Modal -->
+    <div class="modal" id="taskDetailsModal" tabindex="-1" aria-labelledby="taskDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="taskDetailsModalLabel">Task Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Task Name:</strong> Develop Dashboard UI</p>
+                            <p><strong>Assigned To:</strong> John Doe</p>
+                            <p><strong>Priority:</strong> <span class="badge rounded-pill badge-priority-high">High</span></p>
+                            <p><strong>Type:</strong> Individual</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Start Date:</strong> March 1, 2025</p>
+                            <p><strong>Due Date:</strong> March 15, 2025</p>
+                            <p><strong>Status:</strong> <span class="badge rounded-pill badge-status-in-progress">In Progress</span></p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Description</h6>
+                        <p>Create an intuitive and responsive dashboard interface for the HR Management System. The dashboard should include statistics, quick access to important features, and recent activities. Follow the provided design guidelines and ensure compatibility with all major browsers.</p>
+                    </div>
+                    <!-- <div class="mb-3">
+                        <h6>Progress Updates</h6>
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-1"><strong>John Doe</strong></p>
+                                    <small>March 4, 2025</small>
+                                </div>
+                                <p class="mb-0">Completed the wireframes and started working on the HTML/CSS implementation.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-1"><strong>John Doe</strong></p>
+                                    <small>March 6, 2025</small>
+                                </div>
+                                <p class="mb-0">Finished the main layout and implemented responsive design. Working on the data visualization components now.</p>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+{% endblock 'main' %}

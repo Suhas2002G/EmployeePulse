@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User  
 from django.contrib.auth import authenticate       
 from django.contrib.auth import login,logout
-from .models import Dept, Role, Employee
+from .models import Dept, Role, Employee, Task
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 
@@ -146,66 +146,70 @@ def employee(request):
 
 
 
-
 def add_emp(request):
-    if request.method == "POST":
-        fn = request.POST.get('fname')
-        ln = request.POST.get('lname')
-        e = request.POST.get('email')
-        mob = request.POST.get('mob')
+    if request.method == 'POST':
+        # Get form data
+        first_name = request.POST.get('fname')
+        last_name = request.POST.get('lname')
+        email = request.POST.get('email')
+        mobile = request.POST.get('mob')
         dept_id = request.POST.get('dept')
         role_id = request.POST.get('role')
         password = request.POST.get('pass')
-        cpass = request.POST.get('cpass')
+        confirm_password = request.POST.get('cpass')
 
-        print(fn)
-        print(ln)
-        print(e)
-        print(mob)
-        print(dept_id)
-        print(role_id)
-        # print(username)
-        print(make_password(password))
-
-        # Check if all fields are filled
-        if not all([fn, ln, e, mob, dept_id, role_id, password, cpass]):
-            messages.error(request, "All fields are required.")
+        # Validate passwords match
+        if password != confirm_password:
+            messages.error(request, "Passwords do not match")
             return redirect('/employee')
 
-        # Validate mobile number
-        if not mob.isdigit() or len(mob) not in [10, 12]:
-            messages.error(request, "Invalid mobile number format.")
-            return redirect('/employee')
-        
-        # Check if all fields are filled
-        if password != cpass:
-            messages.error(request, "Password and Confirm Password should be same")
-            return redirect('/employee')
-        
-        # Validate department and role
-        department = Dept.objects.get(dept_id=dept_id)
-        role = Role.objects.get(id=role_id)
+        try:
+            # Create user
+            user = User.objects.create_user(
+                username=email,
+                email=email,
+                password=password,
+                first_name=first_name,
+                last_name=last_name
+            )
 
-        # Check for existing username (case insensitive)
-        if Employee.objects.filter(email__iexact=e).exists():
-            messages.error(request, "Email already taken. Choose a different one.")
-            return redirect('/employee')
+            # Get department and role objects
+            department = Dept.objects.get(dept_id=int(dept_id))  # ✅ Convert ID to integer
+            role = Role.objects.get(id=int(role_id))  # ✅ Convert ID to integer
 
-        # Create and save the Employee
-        Employee.objects.create(
-            first_name=fn,
-            last_name=ln,
-            email=e,
-            mobile=mob,
-            dept_id=dept_id,
-            role=role,
-            password=make_password(password)  # Secure password hashing
-        )
+            # Create employee (Assigning ForeignKey fields correctly)
+            Employee.objects.create(
+                uid=user,
+                mobile=mobile,
+                dept=department,  # ✅ Assigning the instance
+                role=role,  # ✅ Assigning the instance
+                doj=user.date_joined
+            )
 
-        messages.success(request, "Employee added successfully!")
+            messages.success(request, f"Employee {first_name} {last_name} added successfully")
+        except Exception as e:
+            messages.error(request, f"Error adding employee: {str(e)}")
+
         return redirect('/employee')
 
-    return render(request, 'employee.html')  # Ensure this template is correct
+    # If GET request (shouldn't happen directly)
+    return redirect('/employee')
+
+
+
+
+
+def del_emp(request, eid):
+    try:
+        employee = Employee.objects.get(id=eid)
+        employee.delete()
+
+        messages.success(request, f"Employee {employee.uid.first_name} {employee.uid.last_name} deleted successfully")
+    except Exception as e:
+        messages.error(request, f"Error deleting employee: {str(e)}")
+    
+    return redirect('/employee')  
+
 
 
 
@@ -236,3 +240,65 @@ def edit_emp(request, eid):
 
 
 
+
+
+
+def task(request):
+    context={}
+    emp = Employee.objects.all()
+    # print(emp)
+    context['emp']=emp
+
+    task = Task.objects.all()
+    context['task']=task
+
+    return render(request, 'task.html',context)
+
+
+
+def add_task(request):
+    context={}
+    if request.method == 'GET':
+        emp = Employee.objects.all()
+        context['emp']=emp
+        return render(request, 'add_task.html', context)
+    if request.method == "POST":
+        task_name = request.POST.get("tname")
+        priority = request.POST.get("priority")
+        assigned_to_id = request.POST.get("assigned_to")
+        task_type = request.POST.get("task_type")
+        start_date = request.POST.get("start_date")
+        due_date = request.POST.get("due_date")
+        description = request.POST.get("desc")
+
+        print(task_name)
+        print(priority)
+        print(assigned_to_id)
+        print(task_type)
+        print(start_date)
+        print(due_date)
+        print(description)
+
+        # Validate assigned_to employee
+        try:
+            assigned_to = Employee.objects.get(id=assigned_to_id)
+            print(assigned_to)
+        except Employee.DoesNotExist:
+            messages.error(request, "Error occured.")
+            return redirect("/task")  # Replace with actual task listing page name
+
+        # Create new task
+        Task.objects.create(
+            title=task_name,
+            priority=priority,
+            assigned_to=assigned_to,
+            task_type=task_type,
+            start_date=start_date,
+            end_date=due_date,
+            desc=description
+        )
+
+        messages.success(request, "Task created successfully!")
+        return redirect("/task")  # Replace with actual task listing page
+
+    return redirect("/task")  # Fallback for GET requests

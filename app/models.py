@@ -30,13 +30,24 @@ class Role(models.Model):
 class Employee(models.Model):
     uid = models.ForeignKey(User, on_delete=models.CASCADE, db_column='uid')
     mobile = models.CharField(max_length=10, unique=True)
-    role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    dept = models.ForeignKey(Dept, on_delete=models.CASCADE)
+    role = models.ForeignKey(Role, on_delete=models.CASCADE, db_column='rid')
+    dept = models.ForeignKey(Dept, on_delete=models.CASCADE, db_column='did')
     doj = models.DateField(auto_now_add=True)
 
 
-
-
+# Task 
+class Task(models.Model):
+    title = models.CharField(max_length=100)
+    desc = models.CharField(max_length=5000)
+    priority = models.CharField(max_length=20, choices=(('High','High'),('Low','Low'),('Medium','Medium')))
+    assigned_to = models.ForeignKey(Employee, on_delete=models.CASCADE, db_column='assigned_to')
+    start_date = models.DateField()
+    end_date = models.DateField()
+    task_type = models.CharField(max_length=20, choices=(('Team','Team'),('Individual','Individual')))
+    status = models.CharField(max_length=15, choices=(('Pending','Pending'),
+                                                      ('In-Progress','In-Progress'),
+                                                      ('Completed','Completed'))
+                                                      , default='Pending')
 
 
 

@@ -178,7 +178,7 @@
 
 
 
-  
+
 /* Home page starts here  */
 /* Hero Section */
 .home-hero {
@@ -297,74 +297,123 @@
 
 
 /* dept starts here  */
+/* Department Dashboard Styles */
 .dept-container {
-  width: 95%;
-  margin: 20px auto;
-  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .dept-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .dept-header h2 {
+  font-size: 1.8rem;
+  color: #2c3e50;
   margin: 0;
-  font-size: 24px;
 }
 
 .dept-add-btn {
-  background-color: #28a745;
+  background-color: #3498db;
   color: white;
   border: none;
-  padding: 10px 16px;
-  font-size: 16px;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  border-radius: 4px;
   cursor: pointer;
-  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-/* Table Styling */
+.dept-add-btn:hover {
+  background-color: #2980b9;
+}
+
+/* Alert Messages */
+.alert {
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+/* Department Table */
 .dept-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  border-radius: 6px;
+  overflow: hidden;
 }
 
-.dept-table th, .dept-table td {
-  border: 1px solid #3B1E54;
-  padding: 10px;
-  text-align: center;
+.dept-table thead {
+  background-color: #f8f9fa;
 }
 
 .dept-table th {
-  /* background-color: #007bff; */
-  background-color: #D4BEE4;
-  color: #3B1E54;
+  padding: 1rem;
+  text-align: left;
+  font-weight: 600;
+  color: #495057;
+  border-bottom: 2px solid #dee2e6;
+}
+
+.dept-table td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid #e9ecef;
+  color: #495057;
+}
+
+.dept-table tbody tr:hover {
+  background-color: #f8f9fa;
 }
 
 .dept-edit-btn, .dept-delete-btn {
-  border: none;
-  padding: 6px 12px;
-  cursor: pointer;
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
   border-radius: 4px;
-  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
 }
 
 .dept-edit-btn {
-  margin: 0 10px;
   background-color: #ffc107;
-  color: black;
+  color: #212529 !important;
 }
 
 .dept-delete-btn {
-  margin: 0 8px;
   background-color: #dc3545;
-  color: white;
+  color: white !important;
 }
 
-/* Popup Form Styling */
+.dept-edit-btn:hover {
+  background-color: #e0a800;
+}
+
+.dept-delete-btn:hover {
+  background-color: #c82333;
+}
+
+/* Department Form Popup */
 .dept-form-popup {
   display: none;
   position: fixed;
@@ -372,69 +421,111 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
   justify-content: center;
   align-items: center;
 }
 
 .dept-form-container {
-  background: white;
-  padding: 20px;
-  width: 40%;
+  background-color: white;
+  padding: 2rem;
   border-radius: 8px;
-  text-align: left;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .dept-form-container h3 {
-  text-align: center;
-  margin-bottom: 15px;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  font-size: 1.4rem;
+  border-bottom: 1px solid #e0e0e0;
+  padding-bottom: 0.8rem;
 }
 
 .dept-form-label {
-  font-weight: bold;
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #495057;
 }
 
 .dept-form-input, .dept-form-textarea {
   width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 14px;
+  padding: 0.6rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  margin-bottom: 1.2rem;
+  font-family: inherit;
 }
 
 .dept-form-textarea {
-  height: 80px;
-  resize: none;
+  min-height: 100px;
+  resize: vertical;
 }
 
-/* .dept-form-btn-group {
+.dept-form-btn-group {
   display: flex;
-  justify-content: space-between;
-} */
+  justify-content: flex-end;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
 
 .dept-form-submit {
-  background-color: #007bff;
+  background-color: #28a745;
   color: white;
   border: none;
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
   cursor: pointer;
-  border-radius: 5px;
-  margin-right: 10px;
+  font-weight: 500;
 }
 
 .dept-form-cancel {
-  background-color: #dc3545;
+  background-color: #6c757d;
   color: white;
   border: none;
-  padding: 8px 16px;
-  font-size: 14px;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
   cursor: pointer;
-  border-radius: 5px;
+  font-weight: 500;
+}
+
+.dept-form-submit:hover {
+  background-color: #218838;
+}
+
+.dept-form-cancel:hover {
+  background-color: #5a6268;
+}
+
+/* JavaScript functionality support */
+.dept-form-popup.active {
+  display: flex;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .dept-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+  }
+  
+  .dept-table {
+      font-size: 0.9rem;
+  }
+  
+  .dept-table th, .dept-table td {
+      padding: 0.6rem;
+  }
+  
+  .dept-edit-btn, .dept-delete-btn {
+      padding: 0.3rem 0.6rem;
+      font-size: 0.8rem;
+  }
 }
 /* dept endss here  */
 
@@ -514,3 +605,214 @@ a {
   background-color: #dc3545;
   color: white;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Task.html starts here  */
+:root {
+  --primary-color: #3498db;
+  --secondary-color: #2c3e50;
+  --success-color: #27ae60;
+  --warning-color: #f39c12;
+  --danger-color: #e74c3c;
+  --light-gray: #f8f9fa;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f5f5;
+}
+
+
+
+.main-content {
+  padding: 10px;
+}
+
+.card {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.statistic-card {
+  text-align: center;
+  padding: 15px;
+  border-radius: 10px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.statistic-card i {
+  position: absolute;
+  bottom: -10px;
+  right: 10px;
+  font-size: 48px;
+  opacity: 0.2;
+}
+
+.statistic-card.completed {
+  background-color: var(--success-color);
+}
+
+.statistic-card.pending {
+  background-color: var(--warning-color);
+}
+
+.statistic-card.in-progress {
+  background-color: var(--primary-color);
+}
+
+.task-table th {
+  background-color: var(--light-gray);
+}
+
+.badge-priority-high {
+  background-color: var(--danger-color);
+}
+
+.badge-priority-medium {
+  background-color: var(--warning-color);
+}
+
+.badge-priority-low {
+  background-color: var(--success-color);
+}
+
+.badge-status-completed {
+  background-color: var(--success-color);
+}
+
+.badge-status-pending {
+  background-color: var(--warning-color);
+}
+
+.badge-status-in-progress {
+  background-color: var(--primary-color);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.page-link {
+  color: var(--primary-color);
+}
+
+.filter-card {
+  padding: 15px;
+  background-color: white;
+}
+
+.modal-content {
+  border-radius: 10px;
+}
+/* Task.html ends here  */
+
+
+
+
+
+
+/* add task form css starts  */
+.card-form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  width: 100%;
+} 
+
+.add-task-form-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 15px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Form Labels */
+.add-task-form-label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+/* Input Fields */
+.add-task-form-input,
+.add-task-form-select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+/* Select Fields */
+.add-task-form-select {
+  background-color: #fff;
+  cursor: pointer;
+}
+
+/* Textarea */
+textarea {
+  resize: vertical;
+}
+
+/* Button Group */
+.add-task-btn-group {
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Primary Button */
+.add-task-btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.add-task-btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Secondary Button */
+.add-task-btn-secondary {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+
+.add-task-btn-secondary:hover {
+  background-color: #a71d2a;
+}
+/* add task form css ends  */

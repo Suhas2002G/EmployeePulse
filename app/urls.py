@@ -20,7 +20,12 @@ urlpatterns = [
 
     path('employee', views.employee),
     path('add_emp', views.add_emp),
-    # path('del_emp/<eid>', views.del_emp),
+    path('del_emp/<eid>', views.del_emp),
     path('edit_emp/<eid>', views.edit_emp),
+
+
+    path('task', views.task),
+    # path('addtask_form', views.addtask_form),
+    path('add_task', views.add_task),
 ]
 urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
