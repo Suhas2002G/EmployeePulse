@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block 'main' %}
+
+<div class="card card-form add-task-filter-card mt-4">
+    <h2 class="add-task-form-title">Apply for Leave</h2>
+    <form id="updateTaskForm" method="post" action="/apply_for_leave">
+        {% csrf_token %}
+        
+
+        <label for="taskEmployee" class="add-task-form-label">Leave Type:</label>
+        <select id="taskEmployee" class="add-task-form-select" name="type" required>
+            <option value="">Select Type</option>
+            {% for code, name in leave %}
+            <option value="{{ code }}" >{{ name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="taskName" class="add-task-form-label">Leave Reason</label>
+        <textarea id="" name="reason" class="add-task-form-input" rows="3" required></textarea>
+
+    
+
+        <!-- <label for="taskStatus" class="add-task-form-label">Status:</label>
+        <select id="taskStatus" name="task_status" class="add-task-form-select" required>
+            <option value="">Select Status</option>
+            <option value="pending">Pending</option>
+            <option value="in-progress">In Progress</option>
+            <option value="completed">Completed</option>
+        </select> -->
+        <label for="taskDueDate" class="add-task-form-label">From Date:</label>
+        <input type="date" name="from_date" id="from_date" class="add-task-form-input" required>
+
+        <label for="taskDueDate" class="add-task-form-label">To Date:</label>
+        <input type="date" name="to_date" id="to_date" class="add-task-form-input" required>
+
+    
+
+        <div class="add-task-btn-group">
+            <button type="submit" class="add-task-btn-primary">Submit</button>
+            <button type="reset" class="add-task-btn-secondary">Reset</button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock 'main' %}

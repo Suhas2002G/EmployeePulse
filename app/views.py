@@ -2,7 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User  
 from django.contrib.auth import authenticate       
 from django.contrib.auth import login,logout
-from .models import Dept, Role, Employee, Task, Reveive
+from .models import Dept, Role, Employee, Task, Reveive, Leave
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
 
@@ -375,6 +375,42 @@ def leave_dash(request):
 
 
 
-def leave(request):
+def leave_dash(request):
     context={}
-    return render(request, 'leave.html', context)
+    leave = Leave.objects.all()
+    context['leave']=leave
+    return render(request, 'leave-dash.html', context)
+
+
+
+def apply_for_leave(request):
+    context={}
+    if request.method == "GET":
+        # leave = Leave.objects.all()
+        leave = Leave.TYPE
+        context['leave']=leave
+        return render ( request, 'leave-form.html', context)
+    else:
+        emp = Employee.objects.get(uid=request.user.id)
+        type = request.POST.get('type')
+        reason = request.POST.get('reason')
+        from_date = request.POST.get('from_date')
+        to_date = request.POST.get('to_date')
+
+        print(emp)
+        print(type)
+        print(reason)
+        print(from_date)
+        print(to_date)
+
+        Leave.objects.create(
+            eid=emp,
+            leave_type=type,
+            from_date = from_date,
+            to_date=to_date,
+            status = 'Pending',
+            reason=reason
+
+        )
+
+        return redirect('/leave-dash')

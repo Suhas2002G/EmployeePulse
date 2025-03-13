@@ -59,3 +59,12 @@ class Reveive(models.Model):
     reveive_date = models.DateTimeField(auto_now_add=True)
 
 
+
+class Leave(models.Model):
+    TYPE = (('SL','SL'),("PL","PL"),('CL','CL'))
+    eid = models.ForeignKey(Employee, on_delete=models.CASCADE, db_column='eid')
+    reason = models.CharField(max_length=2000)
+    from_date = models.DateField()
+    to_date = models.DateField()
+    leave_type = models.CharField(max_length=200, choices=TYPE)
+    status = models.CharField(max_length=200, default='Pending', choices=(("Approved","Approved"),('Rejected','Rejected')))

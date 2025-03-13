@@ -2,16 +2,164 @@
 {% load static %}
 {% block 'main' %}
 
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Task Management Dashboard</h2>
+            <a class="btn btn-primary" href="/add_task">
+                <i class="fas fa-plus-circle"></i> Create Task
+            </a>
+        </div> -->
+
+        <div class="dept-header mt-3">
+            <h2>Leave Management Dashboard</h2>
+            <a class="btn btn-primary" href="/apply_for_leave">
+                <i class="fas fa-plus-circle"></i> Apply for Leave
+            </a>
+        </div>
+
+        <!-- Display Success & Error Messages -->
+    {% if messages %}
+    {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+        <!-- Statistics Row -->
+        <!-- <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="statistic-card completed">
+                    <h3 id="completed-count"> {{completed_task}} </h3>
+                    <p class="mb-0">Completed Tasks</p>
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="statistic-card pending">
+                    <h3 id="pending-count">{{pending_task}}</h3>
+                    <p class="mb-0">Pending Tasks</p>
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="statistic-card in-progress">
+                    <h3 id="in-progress-count"> {{in_progress_task}} </h3>
+                    <p class="mb-0">In Progress Tasks</p>
+                    <i class="fas fa-spinner"></i>
+                </div>
+            </div>
+        </div> -->
 
 
 
+        <!-- Tasks Table -->
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover task-table">
+                        <thead>
+                            <tr>
+                                <th>Sr.No</th>
+                                <th>Employee Name</th>
+                                <th>Leave Type</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>Leave Reason</th>
+                                <th>Status</th>
+                                <th>Approve/Reject</th>
+                            </tr>
+                        </thead>
+                        <tbody id="taskTableBody">
+                            {% for i in leave %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{i.eid.uid.first_name}}</td>
+                                <td>{{i.leave_type}}</td>
+                                <td>{{i.from_date}}</td>
+                                <td>{{i.to_date}}</td>
+                                <td>{{i.reason}}</td>
+                                <td><span class="">{{i.status}}</span></td>
+                                <td>
+                                    <span class="badge rounded-pill badge-status-completed">Approve</span>
+                                    <span class="badge rounded-pill badge-priority-high">Reject</span>
+                                </td>
+                                <!-- <td>
+                                    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">
+                                        <i class="fas fa-eye"></i> See Details
+                                    </button>
+                                </td> -->
+                            </tr>
+                            {% endfor %}
+                            
+                        </tbody>
+                    </table>
+                </div>
+                
+               
+            </div>
+        </div>
+    </div>
 
 
 
+    <!-- Task Details Modal -->
+    <div class="modal" id="taskDetailsModal" tabindex="-1" aria-labelledby="taskDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="taskDetailsModalLabel">Task Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Task Name:</strong> Develop Dashboard UI</p>
+                            <p><strong>Assigned To:</strong> John Doe</p>
+                            <p><strong>Priority:</strong> <span class="badge rounded-pill badge-priority-high">High</span></p>
+                            <p><strong>Type:</strong> Individual</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Start Date:</strong> March 1, 2025</p>
+                            <p><strong>Due Date:</strong> March 15, 2025</p>
+                            <p><strong>Status:</strong> <span class="badge rounded-pill badge-status-in-progress">In Progress</span></p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <h6>Description</h6>
+                        <p>Create an intuitive and responsive dashboard interface for the HR Management System. The dashboard should include statistics, quick access to important features, and recent activities. Follow the provided design guidelines and ensure compatibility with all major browsers.</p>
+                    </div>
+                    <!-- <div class="mb-3">
+                        <h6>Progress Updates</h6>
+                        <div class="card mb-2">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-1"><strong>John Doe</strong></p>
+                                    <small>March 4, 2025</small>
+                                </div>
+                                <p class="mb-0">Completed the wireframes and started working on the HTML/CSS implementation.</p>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-1"><strong>John Doe</strong></p>
+                                    <small>March 6, 2025</small>
+                                </div>
+                                <p class="mb-0">Finished the main layout and implemented responsive design. Working on the data visualization components now.</p>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
-
-
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 
 
 

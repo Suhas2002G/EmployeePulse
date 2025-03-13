@@ -27,6 +27,17 @@
                         <input  class="form-control" id="emailInput" name="ue" placeholder="Enter Email" required>
                         <label for="emailInput">Email address</label>
                     </div>
+
+                    
+                    <div class="form-floating">
+                        <select class="form-select" id="userRole" name="role" required>
+                            <option value="" selected disabled>Select Role</option>
+                            <option value="admin">Admin</option>
+                            <option value="employee">Employee</option>
+                        </select>
+                        <label for="userRole">User Role</label>
+                    </div>
+                    
                     
                     <div class="form-floating">
                         <input type="password" class="form-control" id="passwordInput" name="upass" placeholder="Password" required>
@@ -48,3 +59,13 @@
         </div>
     </div>
 </div>
+
+
+<!-- 
+<select id="role" class="add-task-form-select" name="role" required>
+    <option value="">Select Role</option>
+    
+    <option value="admin" >Admin</option>
+    <option value="employee" >Employee</option>
+    
+</select> -->

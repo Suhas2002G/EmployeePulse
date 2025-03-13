@@ -30,7 +30,7 @@
                 <th>Role</th>
                 <th>Date of Joining</th>
                 <!-- <th>Password</th> -->
-                <th>Edit</th>
+                <!-- <th>Edit</th> -->
                 <th>Delete</th>
 
             </tr>
@@ -47,11 +47,11 @@
                 <td> {{i.role.role}} </td>
                 <td> {{i.doj}} </td>
                 
-                <td> <a href="#" onclick="showEmpEditForm('{{ i.id }}','{{ i.first_name }}', '{{ i.last_name }}', '{{ i.email }}', '{{ i.mobile }}', '{{ i.dept.dept_name }}', '{{i.role.role}}')" 
+                <!-- <td> <a href="#" onclick="showEmpEditForm('{{ i.id }}','{{ i.first_name }}', '{{ i.last_name }}', '{{ i.email }}', '{{ i.mobile }}', '{{ i.dept.dept_name }}', '{{i.role.role}}')" 
                     class="dept-edit-btn" style="text-decoration: none; color: black;">
                     Edit
                     </a>
-                </td>
+                </td> -->
 
                 <td> <a href="/del_emp/{{ i.id }}" class="dept-delete-btn" style="text-decoration: none; color: black;">
                     Delete
