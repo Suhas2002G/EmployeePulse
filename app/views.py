@@ -2,10 +2,14 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.models import User  
 from django.contrib.auth import authenticate       
 from django.contrib.auth import login,logout
-from .models import Dept, Role, Employee, Task, Reveive, Leave
+from .models import Dept, Role, Employee, Task, Reveive, Leave, Otp
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
-
+from datetime import date
+import os
+import datetime
+import random
+from django.core.mail import send_mail
 
 # Home page
 def home(request):
@@ -17,19 +21,40 @@ def user_login(request):
     if request.method == 'GET':
         return render(request, 'login.html', context)
     
-    e = request.POST.get('ue')  # retrieve username
-    p = request.POST.get('upass')  # retrieve password
-    
-    user = authenticate(username=e, password=p)  # Authenticate user
-    if user:
-        if user.is_staff:  # Check for staff privileges
-            login(request, user)
-            return redirect('/task')  # Redirect to admin dashboard
-        context['errormsg'] = "You don't have Admin access"
-    else:
-        context['errormsg'] = 'Invalid Admin Credentials'
-    return render(request, 'login.html', context)  # Render the login page with error message
+    if request.method == 'POST':
+        e = request.POST.get('ue')  # retrieve username
+        p = request.POST.get('upass')  # retrieve password
+        # r = request.POST.get('role')
 
+        # print(r)
+        user = authenticate(username=e, password=p)  # Authenticate user
+        if user:
+            if user.is_staff:  # Check for staff privileges
+                login(request, user)
+                return redirect('/task')  # Redirect to admin dashboard
+            context['errormsg'] = "You don't have Admin access"
+        else:
+            context['errormsg'] = 'Invalid Admin Credentials'
+        return render(request, 'login.html', context)
+        # if r == 'admin':
+        #     user = authenticate(username=e, password=p)  # Authenticate user
+        #     if user:
+        #         if user.is_staff:  # Check for staff privileges
+        #             login(request, user)
+        #             return redirect('/task')  # Redirect to admin dashboard
+        #         context['errormsg'] = "You don't have Admin access"
+        #     else:
+        #         context['errormsg'] = 'Invalid Admin Credentials'
+        #     return render(request, 'login.html', context)  # Render the login page with error message
+        # else:
+        #     u=authenticate(username=e,password=p) # For Authentication Purpose
+        #     if u is not None:
+        #         login(request,u)        # Login Method
+        #         return redirect('/emp-task')
+        #         # return HttpResponse('emp fetched')
+        #     else:
+        #         context['errormsg']='Invalid Credential'
+        #         return render(request,'login.html',context)
 
 
 
@@ -187,8 +212,17 @@ def add_emp(request):
                 role=role,  # ✅ Assigning the instance
                 doj=user.date_joined
             )
-
+            frm='suhas8838@gmail.com'
             messages.success(request, f"Employee {first_name} {last_name} added successfully")
+            send_mail(
+                'Reset Password',
+                f"Welcome to our company..! Your Username : {email} and Password : {password} ",
+                frm,
+                [email],
+                fail_silently=False,
+                )
+
+
         except Exception as e:
             messages.error(request, f"Error adding employee: {str(e)}")
 
@@ -236,6 +270,96 @@ def edit_emp(request, eid):
 
 
 
+def forgetpass(request):
+    return render(request, 'forget-password.html')
+
+
+
+def sendOTP(request):
+    context = {}
+    if request.method == "POST":
+        e = request.POST.get("uemail")
+
+        # Check if user exists
+        if User.objects.filter(email=e).exists():
+            otp = str(random.randint(1000, 9999))
+            frm='suhas8838@gmail.com'
+            # Save OTP 
+            Otp.objects.create(otp=otp, email=e)
+
+            # Store email in session
+            request.session['reset_email'] = e  
+
+            # Send OTP to user email
+            send_mail(
+                'Reset Password',
+                f"Your OTP for password reset is: {otp}",
+                frm,
+                [e],
+                fail_silently=False,
+            )
+
+            return redirect('/verify-otp')  # Redirect without email in URL
+        else:
+            context['errormsg'] = 'This email ID is not registered with us!'
+            return render(request, 'forget-password.html', context)
+
+
+
+def verify_otp(request):
+    context = {}
+    e = request.session.get('reset_email')   # Retrieve email from session
+    if not e:
+        return redirect('/forgetpass')  # Redirect if email is missing
+
+    if request.method == 'POST':
+        input_otp = request.POST.get('otp')
+        otp_entry = Otp.objects.filter(email=e).order_by('-created_at').first()
+ 
+        if otp_entry.otp == input_otp:
+            return redirect('/setPass')  # Redirect to password reset page
+        else:
+            context['error_message'] = 'Incorrect OTP. Please try again.'
+    return render(request, 'verify-otp.html', context)
+
+
+
+
+def setPass(request):
+    context = {}
+    e = request.session.get('reset_email')  # Retrieve email from session
+    if not e:
+        return redirect('/forgetpass')
+    
+    if request.method == 'GET':
+        return render(request, 'setPass.html')
+    else:
+        p = request.POST.get('pass', '')
+        cp = request.POST.get('cpass', '')
+
+        if p=='' or cp=='':
+            context['error_message'] = 'Please fill in all fields.'
+        elif p != cp:
+            context['error_message'] = 'Passwords do not match.'
+        else:
+            try:
+                user = User.objects.filter(email=e).first()
+                if user:
+                    user.set_password(p)
+                    user.save()
+                    request.session.flush()  # Clear session data after successful reset
+                    context['success_message'] = 'Password Successfully Reset.'
+                    return render(request,'setPass.html', context)  # Redirect to login page
+                    
+                else:
+                    context['error_message'] = 'User not found.'
+            except Exception as err:
+                context['error_message'] = 'An error occurred. Please try again.'
+
+    return render(request, 'setPass.html', context)
+
+
+
 
 
 
@@ -276,7 +400,7 @@ def add_task(request):
     if request.method == "POST":
         task_name = request.POST.get("tname")
         priority = request.POST.get("priority")
-        assigned_to_id = request.POST.get("assigned_to")
+        assigned_to_id = request.POST["assigned_to"]
         task_type = request.POST.get("task_type")
         start_date = request.POST.get("start_date")
         due_date = request.POST.get("due_date")
@@ -284,7 +408,7 @@ def add_task(request):
 
         print(task_name)
         print(priority)
-        print(assigned_to_id)
+        print(f'this is eid {assigned_to_id}')
         print(task_type)
         print(start_date)
         print(due_date)
@@ -292,7 +416,7 @@ def add_task(request):
 
         # Validate assigned_to employee
         try:
-            assigned_to = Employee.objects.get(id=assigned_to_id)
+            assigned_to = Employee.objects.get(uid=assigned_to_id)
             print(assigned_to)
         except Employee.DoesNotExist:
             messages.error(request, "Error occured.")
@@ -379,8 +503,21 @@ def leave_dash(request):
     context={}
     leave = Leave.objects.all()
     context['leave']=leave
+
     return render(request, 'leave-dash.html', context)
 
+
+
+def status(request,id,ch):
+    l = Leave.objects.get(id=id)
+    print(l)
+    if ch == '0':
+        l.status='Approve'
+        l.save()
+    if ch == '1' : 
+        l.status='Reject'
+        l.save()
+    return redirect('/leave-dash')
 
 
 def apply_for_leave(request):
@@ -414,3 +551,30 @@ def apply_for_leave(request):
         )
 
         return redirect('/leave-dash')
+    
+
+
+
+# def emp_dash(request):
+#     context={}
+#     return render(request, 'emp-dash.html', context)
+
+
+
+# def emp_task(request):
+#     context={}
+#     task = Task.objects.filter(assigned_to=request.user.id)
+#     context['task']=task
+#     return render(request, 'emp-task.html', context)
+
+
+
+# def emp_review(request):
+#     context={}
+#     return render(request, 'emp-review.html', context)
+
+
+
+# def emp_leave(request):
+#     context={}
+#     return render(request, 'emp-leave.html', context)

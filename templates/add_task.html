@@ -13,7 +13,7 @@
         <select id="taskEmployee" class="add-task-form-select" name="assigned_to" required>
             <option value="">Select Employee</option>
             {% for i in emp %}
-            <option value="{{i.id}}">{{i.uid.first_name}} {{i.uid.last_name}}</option>
+            <option value="{{i.uid.id}}">{{i.uid.first_name}} {{i.uid.last_name}}</option>
             {% endfor %}
         </select>
 

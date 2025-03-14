@@ -12,7 +12,10 @@ urlpatterns = [
     path('add_dept', views.add_dept),
     path('del_dept/<did>', views.del_dept),
     path('edit/<did>', views.edit),
-
+    path('forgetpass', views.forgetpass),
+    path('sendOTP', views.sendOTP),
+    path('verify-otp', views.verify_otp),
+    path('setPass', views.setPass),
     path('role', views.role),
     path('add_role', views.add_role),
     path('del_role/<rid>', views.del_role),
@@ -34,7 +37,15 @@ urlpatterns = [
 
 
     path('leave-dash', views.leave_dash),
+    path('status/<id>/<ch>', views.status),
+
     path('apply_for_leave', views.apply_for_leave),
+
+
+    # path('emp_dash', views.emp_dash),
+    # path('emp-leave', views.emp_leave),
+    # path('emp-review', views.emp_review),
+    # path('emp-task', views.emp_task),
 
 ]
 urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

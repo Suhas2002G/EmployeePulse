@@ -82,8 +82,8 @@
                                 <td>{{i.reason}}</td>
                                 <td><span class="">{{i.status}}</span></td>
                                 <td>
-                                    <span class="badge rounded-pill badge-status-completed">Approve</span>
-                                    <span class="badge rounded-pill badge-priority-high">Reject</span>
+                                    <a href="/status/{{i.id}}/0"><span class="badge rounded-pill badge-status-completed">Approve</span></a>
+                                    <a href="/status/{{i.id}}/1"><span class="badge rounded-pill badge-priority-high">Reject</span></a>
                                 </td>
                                 <!-- <td>
                                     <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#taskDetailsModal">

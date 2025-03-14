@@ -30,8 +30,8 @@ ALLOWED_HOSTS = []
 
 # Gmail Integration settings
 EMAIL_HOST='smtp.gmail.com'        #smtp : send mail transfer protocol
-EMAIL_HOST_USER= os.getenv("EMAIL_HOST_USER")
-EMAIL_HOST_PASSWORD= os.getenv("EMAIL_HOST_PASSWORD")
+EMAIL_HOST_USER= 'societyy360@gmail.com'
+EMAIL_HOST_PASSWORD= 'wvkb wjph zdbl mcje'
 EMAIL_PORT= 587      # default port of email
 EMAIL_USE_TLS=True   # TLS : Transport Layer Security is used to provide security
 EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'

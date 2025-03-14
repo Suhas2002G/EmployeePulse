@@ -68,3 +68,10 @@ class Leave(models.Model):
     to_date = models.DateField()
     leave_type = models.CharField(max_length=200, choices=TYPE)
     status = models.CharField(max_length=200, default='Pending', choices=(("Approved","Approved"),('Rejected','Rejected')))
+
+
+# To Otp while Forget Password 
+class Otp(models.Model):
+    email = models.EmailField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    otp = models.CharField(max_length=4)
