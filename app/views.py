@@ -215,7 +215,7 @@ def add_emp(request):
             frm='suhas8838@gmail.com'
             messages.success(request, f"Employee {first_name} {last_name} added successfully")
             send_mail(
-                'Reset Password',
+                'Welcome to EmployeePulse',
                 f"Welcome to our company..! Your Username : {email} and Password : {password} ",
                 frm,
                 [email],
