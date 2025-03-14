@@ -482,7 +482,7 @@ def reveive(request):
         )
 
 
-        return redirect('/reveive_dash')
+        return redirect('/reveive-dash')
 
 
 

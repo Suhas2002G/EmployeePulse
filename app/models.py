@@ -35,7 +35,7 @@ class Employee(models.Model):
     doj = models.DateField(auto_now_add=True)
 
 
-# Task 
+# Task Model
 class Task(models.Model):
     title = models.CharField(max_length=100)
     desc = models.CharField(max_length=5000)
