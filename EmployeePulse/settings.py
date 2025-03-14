@@ -22,12 +22,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-(7r%m4&en9ed$^c%a$=w$fg-3d2w9ro9_do+z&j6#e#62y8m^h'
+# SECRET_KEY = 'django-insecure-(7r%m4&en9ed$^c%a$=w$fg-3d2w9ro9_do+z&j6#e#62y8m^h'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(' ')
 
 # Gmail Integration settings
 EMAIL_HOST='smtp.gmail.com'        #smtp : send mail transfer protocol
@@ -106,7 +109,8 @@ DATABASES = {
     }
 }
 
-DATABASES['default'] = dj_database_url.parse('postgresql://employeepulse_81f7_user:s2i1WFWauXrciKVznlcfNUJTYTsXZM5I@dpg-cv9s7pjtq21c73bnrj3g-a.oregon-postgres.render.com/employeepulse_81f7')
+database_url = os.environ.get('DATABASE_URL')
+DATABASES['default'] = dj_database_url.parse(database_url)
 
 # postgresql://employeepulse_81f7_user:s2i1WFWauXrciKVznlcfNUJTYTsXZM5I@dpg-cv9s7pjtq21c73bnrj3g-a.oregon-postgres.render.com/employeepulse_81f7
 # Password validation
