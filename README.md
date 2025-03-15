@@ -58,6 +58,11 @@ The system provides a **user-friendly interface** with a **robust backend** to e
 
 ---
 
+## 📌 Databse Schema
+<img src="ER-Diagram.png" alt="Task Manager Screenshot" width="500">
+
+---
+
 ## 🌐 Deployment
 - The application is deployed on **render.com** which cloud-based platform with automatic updates.
 - A **GitHub repository** is maintained with proper version control.
