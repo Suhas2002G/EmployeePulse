@@ -58,7 +58,7 @@ The system provides a **user-friendly interface** with a **robust backend** to e
 
 ---
 
-## 📌 Databse Schema
+## 📌 Database Schema
 <img src="ER-Diagram.png" alt="Task Manager Screenshot" width="500">
 
 ---
