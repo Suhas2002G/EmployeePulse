@@ -527,7 +527,7 @@ def apply_for_leave(request):
         leave = Leave.TYPE
         context['leave']=leave
         return render ( request, 'leave-form.html', context)
-    else:
+    if request.method == "POST":
         emp = Employee.objects.get(uid=request.user.id)
 
         type = request.POST.get('type')

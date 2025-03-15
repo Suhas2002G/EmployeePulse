@@ -21,16 +21,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
 # SECRET_KEY = 'django-insecure-(7r%m4&en9ed$^c%a$=w$fg-3d2w9ro9_do+z&j6#e#62y8m^h'
-SECRET_KEY = os.environ.get('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
-DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
-
 # ALLOWED_HOSTS = []
+
+# SECURITY WARNING: keep the secret key used in production secret!
+# SECURITY WARNING: don't run with debug turned on in production!
+
+# Render.com
+SECRET_KEY = os.environ.get('SECRET_KEY')
+DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(' ')
+
 
 # Gmail Integration settings
 EMAIL_HOST='smtp.gmail.com'        #smtp : send mail transfer protocol
@@ -110,8 +112,8 @@ DATABASES = {
     }
 }
 
-database_url = os.environ.get('DATABASE_URL')
-DATABASES['default'] = dj_database_url.parse(database_url)
+# database_url = os.environ.get('DATABASE_URL')
+# DATABASES['default'] = dj_database_url.parse(database_url)
 
 # postgresql://employeepulse_81f7_user:s2i1WFWauXrciKVznlcfNUJTYTsXZM5I@dpg-cv9s7pjtq21c73bnrj3g-a.oregon-postgres.render.com/employeepulse_81f7
 # Password validation
