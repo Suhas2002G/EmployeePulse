@@ -529,6 +529,7 @@ def apply_for_leave(request):
         return render ( request, 'leave-form.html', context)
     else:
         emp = Employee.objects.get(uid=request.user.id)
+
         type = request.POST.get('type')
         reason = request.POST.get('reason')
         from_date = request.POST.get('from_date')
